@@ -1,0 +1,17 @@
+{
+  "name": "GDE",
+  "version": "1.0.0",
+  "description": "Aplicação da metodoliga GDE",
+  "main": "index.js",
+  "scripts": {
+    "test": "electron . development",
+    "start": "electron ."
+  },
+  "author": "Tiago Lobão",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^5.0.0"
+  },
+  "dependencies": {
+  }
+}
