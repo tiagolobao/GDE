@@ -22,7 +22,8 @@ app.on('ready',()=>{
     height: 600,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    icon: __dirname + '/icons/64x64.png'
   });
 
   //Load page as a simple HTML
@@ -54,7 +55,7 @@ if(process.platform == 'darwin'){
 const mainMenuTemplate =  [
   // Each object is a dropdown
   {
-    label: 'File',
+    label: 'Options',
     submenu:[
       {
         label: 'Toggle tabs',

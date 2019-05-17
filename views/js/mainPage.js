@@ -14,6 +14,16 @@ function openTab(evt, cityName) {
   evt.currentTarget.className += ' active';
 }
 
+/* Add element function */
+function addElement(evt){
+
+}
+
+/* Add Damage function */
+function addDamage(evt){
+
+}
+
 (function(){
 
   let lastTabContentWidth = 161;
