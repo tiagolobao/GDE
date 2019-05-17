@@ -13,5 +13,6 @@
     "electron": "^5.0.0"
   },
   "dependencies": {
+    "mongoose": "^5.5.9"
   }
 }

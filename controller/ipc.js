@@ -1,33 +1,16 @@
-<!DOCTYPE html>
-<html>
 
-  <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="css/mainPage.css" />
-    <script src="js/plain-draggable.min.js"></script>
-  </head>
+module.exports = (ipcRenderer,mainWindow) => {
 
-  <body>
-
-    <!-- Vertical Tab -->
-    <div class="tab">
-      <button class="tablinks" onclick="openTab(event, 'vp')">Vigas Principais</button>
-      <button class="tablinks" onclick="openTab(event, 'vs')">Vigas Secundárias</button>
-    </div>
-
-
-    <div id="width-selector">
-      <!-- Width selector -->
-    </div>
-
-    <!-- Tab content -->
-    <div id="none" class="tabcontent"> <!-- Hidden tab content -->
-      <p> Escolha uma aba para começar </p>
-    </div>
-
-    <div id="vp" class="tabcontent">
-      <button class='add-element'> + </button>
+  /*
+    add_element Request
+    Used for adding elements on a list
+  */
+  ipcRenderer.on('add_element', function(e, data){
+    const response = {
+      data: data,
+      verified: false,
+    }
+    response.innerHTML = `
       <table class="element">
         <tr>
           <td class="element-id" colspan="4"> Local: </td>
@@ -38,13 +21,7 @@
           <th> Fp </th>
           <th> Fi </th>
           <th> D </th>
-          <td rowspan="9000" > <img class="center" src="http://www.pudim.com.br/pudim.jpg" height="100"> </td>
-        </tr>
-        <tr>
-          <td> Desvio de Geometria </td>
-          <td class="number"> 8 </td>
-          <td class="number"> 1 </td>
-          <td class="number"> 3,2 </td>
+          <td rowspan="9000" > <img class="center" src="" max-height="100"> </td>
         </tr>
         <tr>
           <td class="add-row">
@@ -79,13 +56,12 @@
           <td></td>
         </tr>
       </table> <!-- .element -->
-    </div>
+    `;
+    mainWindow.webContents.send('add_element', response);
+  });
 
-    <div id="vs" class="tabcontent">
-      <p>Paris is the capital of France.</p>
-    </div>
+  ipcRenderer.on('add_row', function(e, data){
 
-    <script src="js/mainPage.js"></script>
-  </body>
+  });
 
-</html>
+}
