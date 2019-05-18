@@ -11,7 +11,7 @@ module.exports = (appDir) => {
       webPreferences: {
         nodeIntegration: true
       },
-      icon: appDir + '/icons/64x64.png'
+      icon: appDir + '/images/icon.png'
     });
 
     //Load page as a simple HTML

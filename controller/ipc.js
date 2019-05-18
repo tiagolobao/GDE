@@ -7,7 +7,7 @@ module.exports = (ipcRenderer,mainWindow) => {
   */
   ipcRenderer.on('add_element', function(e, data){
     const response = {
-      data: data,
+      elementId: data,
       verified: false,
     }
     response.innerHTML = `
@@ -21,7 +21,7 @@ module.exports = (ipcRenderer,mainWindow) => {
           <th> Fp </th>
           <th> Fi </th>
           <th> D </th>
-          <td rowspan="9000" > <img class="center" src="" max-height="100"> </td>
+          <td rowspan="9000" > <img class="center" src="assets/imagens/sem_imagem.png" height="150"> </td>
         </tr>
         <tr>
           <td class="add-row">
