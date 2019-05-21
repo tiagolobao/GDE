@@ -11,7 +11,6 @@
 html, body{
   height: 100%;
   margin: 0px;
-  background-color: #cfdbd5;
   color: #242423;
   font: 400 13.3333px Arial;
 }
@@ -80,7 +79,8 @@ table.element td, table.element th{
   padding: 5px 15px;
   border: solid;
   border-width: 1px;
-  border-color: #ffffff63;
+  border-color: #00000066;
+  border-style: solid;
 }
 
 table.element td.element-id{
@@ -171,6 +171,17 @@ table.element td.add-row{
 .select-items div:hover, .same-as-selected {
  background-color: rgba(0, 0, 0, 0.1);
 }
+
+/* Simple selector */
+table.element div.simple-select{
+  margin-left: 15px;
+  width: 100%;
+}
+
+table.element div.simple-select select{
+  width: calc(100% - 30px);
+}
+
 
 button.add-element{
   position: fixed;

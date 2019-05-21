@@ -1,6 +1,7 @@
 
 module.exports = (ipcRenderer,mainWindow) => {
 
+  let variables = require('./staticVar.js');
   /*
     add_element Request
     Used for adding elements on a list
@@ -10,37 +11,34 @@ module.exports = (ipcRenderer,mainWindow) => {
       elementId: data,
       verified: false,
     }
+
+    let selectHTML = `<select onchange="selectChange('${data}')">`;
+    selectHTML += `<option value="none"> Adicionar </option>`;
+    variables.elementos.forEach((elemento)=>{
+      if( elemento.id == data ){
+        elemento.danos.forEach((dano)=>{
+          selectHTML += ` <option value="${dano.nome}" data-fp="${dano.fp}"> ${dano.nome} </option> `;
+        });
+      }
+    })
+    selectHTML += '</select>';
+
     response.innerHTML = `
       <table class="element">
         <tr>
           <td class="element-id" colspan="4"> Local: </td>
-          <td class="element-id"> Id: </td>
+          <td rowspan="9000" > <img class="center" src="assets/imagens/sem_imagem.png" height="150"> </td>
         </tr>
         <tr>
           <th> Danos </th>
           <th> Fp </th>
           <th> Fi </th>
           <th> D </th>
-          <td rowspan="9000" > <img class="center" src="assets/imagens/sem_imagem.png" height="150"> </td>
         </tr>
         <tr>
           <td class="add-row">
-            <div class="custom-select">
-              <select>
-                <option value="0">Select car:</option>
-                <option value="1">Audi</option>
-                <option value="2">BMW</option>
-                <option value="3">Citroen</option>
-                <option value="4">Ford</option>
-                <option value="5">Honda</option>
-                <option value="6">Jaguar</option>
-                <option value="7">Land Rover</option>
-                <option value="8">Mercedes</option>
-                <option value="9">Mini</option>
-                <option value="10">Nissan</option>
-                <option value="11">Toyota</option>
-                <option value="12">Volvo</option>
-              </select>
+            <div class="simple-select">
+              ${selectHTML}
             </div>
           </td>
           <td class="number"> --- </td>

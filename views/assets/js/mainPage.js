@@ -1,3 +1,7 @@
+/* Electron commands */
+const electron = require('electron');
+const {ipcRenderer} = electron;
+
 
 /* Open tab function */
 function openTab(evt, cityName) {
@@ -13,6 +17,16 @@ function openTab(evt, cityName) {
   document.getElementById(cityName).style.display = 'block';
   evt.currentTarget.className += ' active';
 }
+
+/* Onchange select */
+function selectChange(id){
+  selectedValue = document.querySelector('#'+id+' select').value;
+  ipcRenderer.send('add_row', {
+    id: id,
+    selectedValue: selectedValue,
+  });
+}
+
 
 (function(){
 
@@ -40,10 +54,6 @@ function openTab(evt, cityName) {
     document.getElementsByClassName('tab')[0].style.width = newWidth + 'px';
   };
 
-
-  /* Electron commands */
-  const electron = require('electron');
-  const {ipcRenderer} = electron;
 
   /* Toggle tab command */
   ipcRenderer.on('toggle:tabs',()=>{
@@ -74,7 +84,7 @@ function openTab(evt, cityName) {
 
   ipcRenderer.on('add_element', function(e, data){
     document.querySelector('#' + data.elementId).insertAdjacentHTML('beforeend', data.innerHTML);
-    processSelector(data.elementId); //Custom selector needs to be processed
+    // processSelector(data.elementId); //Custom selector needs to be processed
   });
 
 /* Custom select code */
@@ -152,6 +162,6 @@ function closeAllSelect(elmnt) {
 /* If the user clicks anywhere outside the select box,
 then close all select boxes: */
 document.addEventListener('click', closeAllSelect);
-processSelector(''); //Process every custom selectors
+// processSelector(''); //Process every custom selectors
 
 })();
