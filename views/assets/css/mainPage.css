@@ -85,12 +85,13 @@ table.element td, table.element th{
 
 table.element td.element-id{
   font-weight: bold;
-  color: #f5cb5c;
+  color: white;
   background-color: #242423;
 }
 
 table.element td.number{
   text-align: center;
+  width: 100px;
 }
 
 table.element {
@@ -99,8 +100,11 @@ table.element {
   margin: 0px;
 }
 
-table.element th{
-
+table.element input{
+  width: 100%;
+  border: none;
+  text-align: center;
+  margin-left: 7px;
 }
 
 hr.table-divider{
@@ -109,7 +113,7 @@ hr.table-divider{
   border-width: 5px;
 }
 
-table.element td.add-row{
+table.element tr.add-row td{
   padding: 0px 0px;
 }
 
@@ -174,12 +178,13 @@ table.element td.add-row{
 
 /* Simple selector */
 table.element div.simple-select{
-  margin-left: 15px;
+  margin: 5px 0px 5px 15px;
   width: 100%;
 }
 
 table.element div.simple-select select{
   width: calc(100% - 30px);
+  border: none;
 }
 
 
@@ -201,4 +206,8 @@ button.add-element:hover {
   background-color: #f5cb5c;
   color: black;
   transition: 0.3s;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text)
 }

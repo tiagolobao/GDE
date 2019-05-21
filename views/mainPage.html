@@ -9,7 +9,6 @@
   </head>
 
   <body>
-
     <!-- Vertical Tab -->
     <div class="tab">
       <button class="tablinks" onclick="openTab(event, 'vp')">Vigas Principais</button>
@@ -35,6 +34,22 @@
     </div>
 
     <script src="assets/js/mainPage.js"></script>
+    <script>
+      //Handling exceptions
+      function inputNumber(input,type){
+        let damage = input.parentElement.previousElementSibling.textContent;
+        let val = parseInt(input.value);
+        if( type == 'fp' ){
+          if( damage == 'Fissuras' ){
+            if( val < 2 ) input.value = 2;
+          }
+          else{
+            if( val < 0 ) input.value = 0;
+          }
+          if( val > 10 ) input.value = 10;
+        }
+      }
+    </script>
   </body>
 
 </html>

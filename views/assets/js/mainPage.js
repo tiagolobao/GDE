@@ -19,14 +19,24 @@ function openTab(evt, cityName) {
 }
 
 /* Onchange select */
-function selectChange(id){
-  selectedValue = document.querySelector('#'+id+' select').value;
-  ipcRenderer.send('add_row', {
-    id: id,
-    selectedValue: selectedValue,
-  });
+function selectChange(id,element){
+  let selectedValue = element.value;
+  element.parentElement.parentElement.parentElement.insertAdjacentHTML('beforebegin', `
+    <tr>
+      <td>${selectedValue}</td>
+      <td class="number"> <input type="number" value="0" onchange="inputNumber(this,'fp')"> </td>
+      <td class="number"> <input type="number" value="0" onchange="inputNumber(this,'fi')"> </td>
+      <td class="number"> --- </td>
+    </tr>
+  `);
+  element.selectedIndex = 0;
 }
 
+function rangeLimiter(min,max){
+
+}
+
+/* non global script */
 
 (function(){
 
@@ -165,3 +175,8 @@ document.addEventListener('click', closeAllSelect);
 // processSelector(''); //Process every custom selectors
 
 })();
+
+
+function inputNumber(input){
+  console.log(input);
+}

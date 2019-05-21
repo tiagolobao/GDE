@@ -12,7 +12,7 @@ module.exports = (ipcRenderer,mainWindow) => {
       verified: false,
     }
 
-    let selectHTML = `<select onchange="selectChange('${data}')">`;
+    let selectHTML = `<select onchange="selectChange('${data}',this)">`;
     selectHTML += `<option value="none"> Adicionar </option>`;
     variables.elementos.forEach((elemento)=>{
       if( elemento.id == data ){
@@ -26,7 +26,7 @@ module.exports = (ipcRenderer,mainWindow) => {
     response.innerHTML = `
       <table class="element">
         <tr>
-          <td class="element-id" colspan="4"> Local: </td>
+          <td class="element-id" colspan="4"><div contentEditable=true data-text="Local: ____"></div></td>
           <td rowspan="9000" > <img class="center" src="assets/imagens/sem_imagem.png" height="150"> </td>
         </tr>
         <tr>
@@ -35,8 +35,8 @@ module.exports = (ipcRenderer,mainWindow) => {
           <th> Fi </th>
           <th> D </th>
         </tr>
-        <tr>
-          <td class="add-row">
+        <tr class="add-row">
+          <td>
             <div class="simple-select">
               ${selectHTML}
             </div>
