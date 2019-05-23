@@ -6,6 +6,28 @@ module.exports = (ipcRenderer,mainWindow) => {
     add_element Request
     Used for adding elements on a list
   */
+
+  ipcRenderer.on('add_row',function(e, data, id){
+    let fp;
+    // Getting fp value
+    variables.elementos.forEach( elem => {
+      if( elem.id == id ){
+        elem.danos.forEach( dano => {
+          if( dano.nome == data ) fp = dano.fp;
+        });
+      }
+    });
+    // Getting html string
+    e.returnValue = `
+      <tr>
+        <td>${data}</td>
+        <td class="number"> <input type="number" value="${fp}" onchange="inputNumber(this,'fp')"> </td>
+        <td class="number"> <input type="number" value="0" onchange="inputNumber(this,'fi')"> </td>
+        <td class="number"> --- </td>
+      </tr>
+    `;
+  });
+
   ipcRenderer.on('add_element', function(e, data){
     const response = {
       elementId: data,

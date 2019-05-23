@@ -21,14 +21,8 @@ function openTab(evt, cityName) {
 /* Onchange select */
 function selectChange(id,element){
   let selectedValue = element.value;
-  element.parentElement.parentElement.parentElement.insertAdjacentHTML('beforebegin', `
-    <tr>
-      <td>${selectedValue}</td>
-      <td class="number"> <input type="number" value="0" onchange="inputNumber(this,'fp')"> </td>
-      <td class="number"> <input type="number" value="0" onchange="inputNumber(this,'fi')"> </td>
-      <td class="number"> --- </td>
-    </tr>
-  `);
+  let response = ipcRenderer.sendSync('add_row',selectedValue,id);
+  element.parentElement.parentElement.parentElement.insertAdjacentHTML('beforebegin', response);
   element.selectedIndex = 0;
 }
 
