@@ -1,7 +1,7 @@
 
 module.exports = (ipcRenderer,mainWindow) => {
 
-  let variables = require('./staticVar.js');
+  const variables = require('./staticVar.js');
   /*
     add_element Request
     Used for adding elements on a list
@@ -39,7 +39,7 @@ module.exports = (ipcRenderer,mainWindow) => {
     variables.elementos.forEach((elemento)=>{
       if( elemento.id == data ){
         elemento.danos.forEach((dano)=>{
-          selectHTML += ` <option value="${dano.nome}" data-fp="${dano.fp}"> ${dano.nome} </option> `;
+          selectHTML += `<option value="${dano.nome}" data-fp="${dano.fp}"> ${dano.nome} </option>`;
         });
       }
     })

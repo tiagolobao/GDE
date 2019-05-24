@@ -78,11 +78,11 @@ function rangeLimiter(min,max){
 
 
   //add_element handles
-  let id_list = ['vp'];
-  id_list.forEach((id)=>{
-    let query = '#' + id + ' button.add-element';
+  document.querySelectorAll('.tabcontent').forEach((tab)=>{
+    if(tab.id == 'none') return;
+    let query = '#' + tab.id + ' button.add-element';
     document.querySelector(query).addEventListener('click',()=>{
-      ipcRenderer.send('add_element', id);
+      ipcRenderer.send('add_element', tab.id);
     });
   });
 

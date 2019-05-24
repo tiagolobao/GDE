@@ -1,8 +1,11 @@
 
 module.exports = (appDir) => {
   const {app, BrowserWindow, Menu, ipcMain} = require('electron');
+  const ejse = require('ejs-electron');
+  const variables = require('./staticVar.js');
   let mainWindow;
 
+  ejse.data('config',variables);
 
   app.on('ready',()=>{
     mainWindow = new BrowserWindow({
@@ -15,7 +18,8 @@ module.exports = (appDir) => {
     });
 
     //Load page as a simple HTML
-    mainWindow.loadFile('views/mainPage.html');
+    //mainWindow.loadFile('views/mainPage.html');
+    mainWindow.loadURL('file://' + appDir + '/views/mainPage.ejs')
 
     mainWindow.on('closed', function () {
       mainWindow = null;
