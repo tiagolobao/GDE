@@ -15,6 +15,14 @@ html, body{
   font: 400 13.3333px Arial;
 }
 
+#none p{
+  text-align: center;
+  margin-top: 200px;
+  color: #f5cb5c96;
+  font-size: 30px;
+  text-shadow: #47474787 1px 1px 2px;
+}
+
 .center{
   display: block;
   margin: 0 auto;
@@ -36,6 +44,7 @@ html, body{
   background-color: #e8eddf;
   width: 160px; /* Dragble */
   height: 100%;
+  position: fixed;
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -71,6 +80,7 @@ html, body{
   border-left: none;
   height: 100%;
   width: calc(100% - 161px); /* Dragble */
+  margin-left: 161px;
 }
 
 /* Table style */

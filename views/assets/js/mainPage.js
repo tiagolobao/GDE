@@ -54,6 +54,7 @@ function rangeLimiter(min,max){
     lastTabContentWidth = newWidth;
     for(let i = 0; i < tabs.length; i++){
       tabs[i].style.width = 'calc(100% - ' + newWidth + 'px)';
+      tabs[i].style['margin-left'] = newWidth + 'px';
     }
     document.getElementsByClassName('tab')[0].style.width = newWidth + 'px';
   };
@@ -66,6 +67,7 @@ function rangeLimiter(min,max){
       tab.style.display = 'inline-block';
       for(let i = 0; i < tabs.length; i++){
         tabs[i].style.width = 'calc(100% - ' + lastTabContentWidth + 'px)';
+        tabs[i].style['margin-left'] = newWidth + 'px';
       }
     }
     else{
