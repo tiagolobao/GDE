@@ -2,7 +2,6 @@
 const electron = require('electron');
 const {ipcRenderer} = electron;
 
-
 /* Open tab function */
 function openTab(evt, cityName) {
   let i, tabcontent, tablinks;
@@ -26,8 +25,11 @@ function selectChange(id,element){
   element.selectedIndex = 0;
 }
 
-function rangeLimiter(min,max){
-
+/* Limit input function */
+function rangeLimiter(input,min,max){
+  if(input < min) return min;
+  else if(input > max) return max;
+  else return input;
 }
 
 /* non global script */

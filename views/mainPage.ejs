@@ -44,21 +44,22 @@ config.elementos.forEach( e => {
 
     <script src="assets/js/mainPage.js"></script>
     <script>
-      //Handling exceptions
+      //onChange event
       function inputNumber(input,type){
         let damage = input.parentElement.previousElementSibling.textContent;
         let val = parseInt(input.value);
+        let min = 0;
+        let max = 20;
         if( type == 'fp' ){
-          if( damage == 'Fissuras' ){
-            if( val < 2 ) input.value = 2;
-          }
-          else{
-            if( val < 0 ) input.value = 0;
-          }
-          if( val > 10 ) input.value = 10;
+          max = 10;
+          min = ( damage == 'Fissuras' ? 2 : 0);
         }
+        if( type == 'fi' ){
+          min = 0;
+          max = 4;
+        }
+        input.value = rangeLimiter(val,min,max);
       }
-
     </script>
   </body>
 
