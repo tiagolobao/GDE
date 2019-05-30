@@ -7,7 +7,7 @@ config.elementos.forEach( e => {
   menuButtons.push(`<button class="tablinks" onclick="openTab(event, '${e.id}')">${e.nome}</button>`);
   tabsContent.push(`
     <div id="${e.id}" class="tabcontent">
-      <button class='add-element'> + </button>
+      <button class='add-element'> <i class="fas fa-plus"></i> </button>
     </div>
   `);
 });
@@ -21,6 +21,7 @@ config.elementos.forEach( e => {
     <title></title>
     <link rel="stylesheet" type="text/css" href="assets/css/mainPage.css" />
     <script src="assets/js/plain-draggable.min.js"></script>
+    <link href="assets/css/all.css" rel="stylesheet"> <%# load fontawesome styles %>
   </head>
 
   <body>
