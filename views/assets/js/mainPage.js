@@ -69,13 +69,14 @@ function rangeLimiter(input,min,max){
       tab.style.display = 'inline-block';
       for(let i = 0; i < tabs.length; i++){
         tabs[i].style.width = 'calc(100% - ' + lastTabContentWidth + 'px)';
-        tabs[i].style['margin-left'] = newWidth + 'px';
+        tabs[i].style['margin-left'] = lastTabContentWidth + 'px';
       }
     }
     else{
       tab.style.display = 'none';
       for(let i = 0; i < tabs.length; i++){
         tabs[i].style.width = '100%';
+        tabs[i].style['margin-left'] = '0px';
       }
     }
   });

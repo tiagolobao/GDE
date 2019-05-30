@@ -210,6 +210,7 @@ button.add-element{
   font-weight: bold;
   background-color: #242423;
   color: white;
+  outline: none;
 }
 
 button.add-element:hover {
