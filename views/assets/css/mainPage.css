@@ -15,6 +15,10 @@ html, body{
   font: 400 13.3333px Arial;
 }
 
+#gde, #npd{
+  text-align: center;
+}
+
 #none p{
   text-align: center;
   margin-top: 200px;

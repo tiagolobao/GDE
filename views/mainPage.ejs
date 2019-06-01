@@ -46,6 +46,10 @@ config.elementos.forEach( e => {
     <script>
       //onChange event
       function inputNumber(input,type){
+
+        /*
+          rangeLimiter usage for handling exceptions
+        */
         let damage = input.parentElement.previousElementSibling.textContent;
         let val = parseInt(input.value);
         let min = 0;
@@ -59,6 +63,29 @@ config.elementos.forEach( e => {
           max = 4;
         }
         input.value = rangeLimiter(val,min,max);
+
+        /*
+          Live Calculate Element Results
+        */
+        let toSend = [];
+        let element = input.parentElement.parentElement.parentElement;
+        let rows = element.querySelectorAll('.data-row');
+        let gde = element.querySelector('#gde');
+        let ndp = element.querySelector('#ndp');
+
+        rows.forEach( row => {
+          toSend.push({
+            fp: row.querySelector('.fp').value,
+            fi: row.querySelector('.fi').value,
+          });
+        });
+        let response = ipcRenderer.sendSync('calc',toSend);
+        console.log(response);
+        gde.innerText = response.gde.toFixed(2);
+        ndp.innerText = response.ndp.nivel;
+        rows.forEach( (row,i) => {
+          row.querySelector('.d').innerText = response.d[i].toFixed(2);
+        });
       }
     </script>
   </body>

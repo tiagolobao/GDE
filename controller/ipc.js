@@ -2,11 +2,48 @@
 module.exports = (ipcRenderer,mainWindow) => {
 
   const variables = require('./staticVar.js');
-  /*
-    add_element Request
-    Used for adding elements on a list
-  */
 
+  /*
+    calc request
+    Used for calculate D (Grau de dano) and GDE (Grau de deterioração)
+  */
+  ipcRenderer.on('calc',function(e, rows){
+
+    //Calculate each D value
+    let d = [];
+    rows.forEach( row => {
+      d.push(( row.fi > 2 ?
+        ( 6 * row.fi - 14 ) * row.fp :
+        0.4 * row.fi * row.fp
+      ));
+    });
+
+    //Calculate GDE
+    let dMax = Math.max.apply(null, d);
+    let dSum = d.reduce( (acc,val) => (acc+val), 0 );
+    let gde = dMax * ( 1 + (
+      (dSum - dMax) / dSum
+    ) );
+
+    //Search for ndp
+    let ndp = 0;
+    for ( let i = 0; i < variables.niveis.length; i++ ){
+      if( variables.niveis[i].gdeMax > gde && variables.niveis[i].gdeMin <= gde )
+        ndp = variables.niveis[i];
+    }
+
+    e.returnValue = {
+      d: d,
+      gde: gde,
+      ndp: ndp,
+    };
+  });
+
+  /*
+    add_row Request
+    Used for adding row on a element
+    OBS: Need sync requests
+  */
   ipcRenderer.on('add_row',function(e, data, id){
     let fp;
     // Getting fp value
@@ -19,15 +56,19 @@ module.exports = (ipcRenderer,mainWindow) => {
     });
     // Getting html string
     e.returnValue = `
-      <tr>
+      <tr class="data-row">
         <td>${data}</td>
-        <td class="number"> <input type="number" value="${fp}" onchange="inputNumber(this,'fp')"> </td>
-        <td class="number"> <input type="number" value="0" onchange="inputNumber(this,'fi')"> </td>
-        <td class="number"> --- </td>
+        <td class="number"> <input type="number" class="fp" value="${fp}" onchange="inputNumber(this,'fp')"> </td>
+        <td class="number"> <input type="number" class="fi" value="0" onchange="inputNumber(this,'fi')"> </td>
+        <td class="number d"> --- </td>
       </tr>
     `;
   });
 
+  /*
+    add_element Request
+    Used for adding elements on a list
+  */
   ipcRenderer.on('add_element', function(e, data){
     const response = {
       elementId: data,
@@ -69,19 +110,16 @@ module.exports = (ipcRenderer,mainWindow) => {
         </tr>
         <tr>
           <td colspan="3"> Grau de Deterioração do Elemento </td>
-          <td></td>
+          <td id="gde"></td>
         </tr>
         <tr>
           <td colspan="3"> Nível de Deterioração da Peça </td>
-          <td></td>
+          <td id="ndp"></td>
         </tr>
       </table> <!-- .element -->
     `;
     mainWindow.webContents.send('add_element', response);
   });
 
-  ipcRenderer.on('add_row', function(e, data){
-
-  });
 
 }

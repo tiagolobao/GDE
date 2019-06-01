@@ -113,7 +113,7 @@ module.exports = {
     {
       nivel: 'Crítico',
       gdeMin: 100,
-      gdeMax: -1,
+      gdeMax: 10000,
       acao: 'Inspeção especial emergencial. Planejar intervenção imediata',
     },
   ],
