@@ -2,35 +2,82 @@
 const electron = require('electron');
 const {ipcRenderer} = electron;
 
-/* Open tab function */
-function openTab(evt, cityName) {
-  let i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName('tabcontent');
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = 'none';
-  }
-  tablinks = document.getElementsByClassName('tablinks');
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(' active', '');
-  }
-  document.getElementById(cityName).style.display = 'block';
-  evt.currentTarget.className += ' active';
-}
+DomReady.ready(function() {
+  //onChange event
+  window.inputNumber = function(input,type) {
 
-/* Onchange select */
-function selectChange(id,element){
-  let selectedValue = element.value;
-  let response = ipcRenderer.sendSync('add_row',selectedValue,id);
-  element.parentElement.parentElement.parentElement.insertAdjacentHTML('beforebegin', response);
-  element.selectedIndex = 0;
-}
+    /*
+      rangeLimiter usage for handling exceptions
+    */
+    let damage = input.parentElement.previousElementSibling.textContent;
+    let val = parseInt(input.value);
+    let min = 0;
+    let max = 20;
+    if( type == 'fp' ){
+      max = 10;
+      min = ( damage == 'Fissuras' ? 2 : 0);
+    }
+    if( type == 'fi' ){
+      min = 0;
+      max = 4;
+    }
+    input.value = rangeLimiter(val,min,max);
 
-/* Limit input function */
-function rangeLimiter(input,min,max){
-  if(input < min) return min;
-  else if(input > max) return max;
-  else return input;
-}
+    /*
+      Live Calculate Element Results
+    */
+    let toSend = [];
+    let element = input.parentElement.parentElement.parentElement;
+    let rows = element.querySelectorAll('.data-row');
+    let gde = element.querySelector('#gde');
+    let ndp = element.querySelector('#ndp');
+
+    rows.forEach( row => {
+      toSend.push({
+        fp: row.querySelector('.fp').value,
+        fi: row.querySelector('.fi').value,
+      });
+    });
+    let response = ipcRenderer.sendSync('calc',toSend);
+    console.log(response);
+    gde.innerText = response.gde.toFixed(2);
+    ndp.innerText = response.ndp.nivel;
+    rows.forEach( (row,i) => {
+      row.querySelector('.d').innerText = response.d[i].toFixed(2);
+    });
+  }
+
+  /* Open tab function */
+  window.openTab = function (evt, cityName) {
+    let i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName('tabcontent');
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = 'none';
+    }
+    tablinks = document.getElementsByClassName('tablinks');
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(' active', '');
+    }
+    document.getElementById(cityName).style.display = 'block';
+    evt.currentTarget.className += ' active';
+  }
+
+  /* Onchange select */
+  window.selectChange = function (id,element){
+    let selectedValue = element.value;
+    let response = ipcRenderer.sendSync('add_row',selectedValue,id);
+    element.parentElement.parentElement.parentElement.insertAdjacentHTML('beforebegin', response);
+    element.selectedIndex = 0;
+  }
+
+  /* Limit input function */
+  window.rangeLimiter = function (input,min,max){
+    if(input < min) return min;
+    else if(input > max) return max;
+    else return input;
+  }
+
+});
 
 /* non global script */
 

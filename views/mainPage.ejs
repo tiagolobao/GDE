@@ -21,6 +21,7 @@ config.elementos.forEach( e => {
     <title></title>
     <link rel="stylesheet" type="text/css" href="assets/css/mainPage.css" />
     <script src="assets/js/plain-draggable.min.js"></script>
+    <script src="assets/js/domready.js"></script>
     <link href="assets/css/all.css" rel="stylesheet"> <%# load fontawesome styles %>
   </head>
 
@@ -43,51 +44,6 @@ config.elementos.forEach( e => {
     <%- tabsContent.join('\n'); %>
 
     <script src="assets/js/mainPage.js"></script>
-    <script>
-      //onChange event
-      function inputNumber(input,type){
-
-        /*
-          rangeLimiter usage for handling exceptions
-        */
-        let damage = input.parentElement.previousElementSibling.textContent;
-        let val = parseInt(input.value);
-        let min = 0;
-        let max = 20;
-        if( type == 'fp' ){
-          max = 10;
-          min = ( damage == 'Fissuras' ? 2 : 0);
-        }
-        if( type == 'fi' ){
-          min = 0;
-          max = 4;
-        }
-        input.value = rangeLimiter(val,min,max);
-
-        /*
-          Live Calculate Element Results
-        */
-        let toSend = [];
-        let element = input.parentElement.parentElement.parentElement;
-        let rows = element.querySelectorAll('.data-row');
-        let gde = element.querySelector('#gde');
-        let ndp = element.querySelector('#ndp');
-
-        rows.forEach( row => {
-          toSend.push({
-            fp: row.querySelector('.fp').value,
-            fi: row.querySelector('.fi').value,
-          });
-        });
-        let response = ipcRenderer.sendSync('calc',toSend);
-        console.log(response);
-        gde.innerText = response.gde.toFixed(2);
-        ndp.innerText = response.ndp.nivel;
-        rows.forEach( (row,i) => {
-          row.querySelector('.d').innerText = response.d[i].toFixed(2);
-        });
-      }
-    </script>
   </body>
 
 </html>
