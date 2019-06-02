@@ -15,7 +15,7 @@ html, body{
   font: 400 13.3333px Arial;
 }
 
-#gde, #ndp{
+td.gde, td.ndp{
   text-align: center;
 }
 
@@ -37,13 +37,14 @@ hr.endtabcontent{
 }
 
 .gdf{
-  border: solid 3px white;
+  border: solid 6px #f5cb5c;
   position: fixed;
   bottom: 10px;
   margin: 35px;
   font-size: 17px;
   background-color: #242423;
   color: white;
+  border-radius: 14px;
 }
 
 #width-selector{

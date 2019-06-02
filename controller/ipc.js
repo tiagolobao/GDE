@@ -4,6 +4,19 @@ module.exports = (ipcRenderer,mainWindow) => {
   const variables = require('./staticVar.js');
 
   /*
+    GDF calc request
+  */
+  ipcRenderer.on('calc_gdf',function(e, gde){
+
+    let gdeMax = Math.max.apply(null, gde);
+    let gdeSum = gde.reduce( (acc,val) => (acc+val), 0 );
+    let gdf = gdeMax * Math.sqrt( 1 + (
+      (gdeSum - gdeMax) / gdeSum
+    ) );
+    e.returnValue = gdf;
+
+  });
+  /*
     calc request
     Used for calculate D (Grau de dano) and GDE (Grau de deterioração)
   */
@@ -110,11 +123,11 @@ module.exports = (ipcRenderer,mainWindow) => {
         </tr>
         <tr>
           <td colspan="3"> Grau de Deterioração do Elemento </td>
-          <td id="gde"></td>
+          <td class="gde"> --- </td>
         </tr>
         <tr>
           <td colspan="3"> Nível de Deterioração da Peça </td>
-          <td id="ndp"></td>
+          <td class="ndp"> --- </td>
         </tr>
       </table> <!-- .element -->
     `;

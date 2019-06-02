@@ -9,42 +9,64 @@ DomReady.ready(function() {
     /*
       rangeLimiter usage for handling exceptions
     */
-    let damage = input.parentElement.previousElementSibling.textContent;
-    let val = parseInt(input.value);
-    let min = 0;
-    let max = 20;
-    if( type == 'fp' ){
-      max = 10;
-      min = ( damage == 'Fissuras' ? 2 : 0);
-    }
-    if( type == 'fi' ){
-      min = 0;
-      max = 4;
-    }
-    input.value = rangeLimiter(val,min,max);
+    (function(){
+      console.log('eai?');
+      let damage = input.parentElement.previousElementSibling.textContent;
+      let val = parseInt(input.value);
+      let min = 0;
+      let max = 20;
+      if( type == 'fp' ){
+        max = 10;
+        min = ( damage == 'Fissuras' ? 2 : 0);
+      }
+      if( type == 'fi' ){
+        min = 0;
+        max = 4;
+      }
+      input.value = rangeLimiter(val,min,max);
+    })();
 
     /*
       Live Calculate Element Results
     */
-    let toSend = [];
-    let element = input.parentElement.parentElement.parentElement;
-    let rows = element.querySelectorAll('.data-row');
-    let gde = element.querySelector('#gde');
-    let ndp = element.querySelector('#ndp');
+    (function(){
+      let toSend = [];
+      let element = input.parentElement.parentElement.parentElement;
+      let rows = element.querySelectorAll('.data-row');
+      let gde = element.querySelector('.gde');
+      let ndp = element.querySelector('.ndp');
 
-    rows.forEach( row => {
-      toSend.push({
-        fp: row.querySelector('.fp').value,
-        fi: row.querySelector('.fi').value,
+      rows.forEach( row => {
+        toSend.push({
+          fp: row.querySelector('.fp').value,
+          fi: row.querySelector('.fi').value,
+        });
       });
-    });
-    let response = ipcRenderer.sendSync('calc',toSend);
-    console.log(response);
-    gde.innerText = response.gde.toFixed(2);
-    ndp.innerText = response.ndp.nivel;
-    rows.forEach( (row,i) => {
-      row.querySelector('.d').innerText = response.d[i].toFixed(2);
-    });
+      let response = ipcRenderer.sendSync('calc',toSend);
+      gde.innerText = response.gde.toFixed(2);
+      ndp.innerText = response.ndp.nivel;
+      rows.forEach( (row,i) => {
+        row.querySelector('.d').innerText = response.d[i].toFixed(2);
+      });
+    })();
+
+    /*
+     Update GDF - Grau de deterioração da família
+    */
+    (function(){
+      let tab = input.parentElement.parentElement.parentElement.parentElement.parentElement;
+      let gdf = tab.querySelector('.gdf td');
+      let gdeValues = [];
+      tab.querySelectorAll('td.gde').forEach( _gde => {
+        let value = _gde.innerText;
+        if( value != '---' )
+          gdeValues.push(parseFloat(value));
+      });
+      let response = ipcRenderer.sendSync('calc_gdf',gdeValues);
+      console.log(gdf);
+      gdf.innerText = response.toFixed(2);
+    })();
+
   }
 
   /* Open tab function */
@@ -221,8 +243,3 @@ document.addEventListener('click', closeAllSelect);
 // processSelector(''); //Process every custom selectors
 
 })();
-
-
-function inputNumber(input){
-  console.log(input);
-}
