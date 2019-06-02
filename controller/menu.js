@@ -3,17 +3,17 @@ module.exports = (Menu, mainWindow) => {
   const mainMenuTemplate =  [
     // Each object is a dropdown
     {
-      label: 'Options',
+      label: 'Opções',
       submenu:[
         {
-          label: 'Toggle tabs',
+          label: 'Esconder/Mostrar Abas',
           accelerator:process.platform == 'darwin' ? 'Command+T' : 'Ctrl+T',
           click(){
             mainWindow.webContents.send('toggle:tabs');;
           }
         },
         {
-          label: 'Quit',
+          label: 'Sair',
           accelerator:process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
           click(){
             app.quit();
