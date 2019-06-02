@@ -7,6 +7,15 @@ config.elementos.forEach( e => {
   menuButtons.push(`<button class="tablinks" onclick="openTab(event, '${e.id}')">${e.nome}</button>`);
   tabsContent.push(`
     <div id="${e.id}" class="tabcontent">
+      <hr class="endtabcontent">
+      <div class="gdf">
+          <table>
+            <tr>
+              <th> Grau de Deterioração da Famíla: </th>
+              <td> 0 </td>
+            </tr>
+          </table>
+      </div>
       <button class='add-element'> <i class="fas fa-plus"></i> </button>
     </div>
   `);

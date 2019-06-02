@@ -139,7 +139,7 @@ DomReady.ready(function() {
   });
 
   ipcRenderer.on('add_element', function(e, data){
-    document.querySelector('#' + data.elementId).insertAdjacentHTML('beforeend', data.innerHTML);
+    document.querySelector('#' + data.elementId).insertAdjacentHTML('afterbegin', data.innerHTML);
     // processSelector(data.elementId); //Custom selector needs to be processed
   });
 
