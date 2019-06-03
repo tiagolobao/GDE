@@ -99,7 +99,7 @@ module.exports = (ipcRenderer,mainWindow,other) => {
       <tr class="data-row">
         <td>${data}</td>
         <td class="number"> <input type="number" class="fp" value="${fp}" onchange="inputNumber(this,'fp')"> </td>
-        <td class="number"> <input type="number" class="fi" value="0" onchange="inputNumber(this,'fi')"> </td>
+        <td class="number"> <input type="number" class="fi" value="1" onchange="inputNumber(this,'fi')"> </td>
         <td class="number d"> --- </td>
       </tr>
     `;

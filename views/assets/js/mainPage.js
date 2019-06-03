@@ -25,14 +25,14 @@ DomReady.ready(function() {
     (function(){
       let damage = input.parentElement.previousElementSibling.textContent;
       let val = parseInt(input.value);
-      let min = 0;
+      let min = 1;
       let max = 20;
       if( type == 'fp' ){
         max = 10;
-        min = ( damage == 'Fissuras' ? 2 : 0);
+        min = ( damage == 'Fissuras' ? 2 : 1);
       }
       if( type == 'fi' ){
-        min = 0;
+        min = 1;
         max = 4;
       }
       input.value = rangeLimiter(val,min,max);
