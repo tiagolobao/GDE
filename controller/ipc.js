@@ -15,13 +15,15 @@ module.exports = (ipcRenderer,mainWindow,other) => {
      return result;
   }
 
+  /*
+    Save Image request
+  */
   ipcRenderer.on('save_img',function(e, path){
     try{
       let fileName = makeid(10) + path.substr( path.length - 4, 4 );
       let newPath = other.dir + '/images/temp/' + fileName;
       other.fs.copyFileSync(path, newPath, err => {
         if (err) throw err;
-        console.log(path + ' was copied to ' + newPath);
       });
       e.returnValue = fileName;
     }

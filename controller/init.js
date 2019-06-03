@@ -20,7 +20,7 @@ module.exports = (appDir) => {
 
     //Load page as a simple HTML
     //mainWindow.loadFile('views/mainPage.html');
-    mainWindow.loadURL('file://' + appDir + '/views/mainPage.ejs')
+    mainWindow.loadURL('file://' + appDir + '/views/mainPage.ejs');
 
     mainWindow.on('closed', function () {
       mainWindow = null;

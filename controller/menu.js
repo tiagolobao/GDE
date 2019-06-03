@@ -9,7 +9,7 @@ module.exports = (Menu, mainWindow) => {
           label: 'Esconder/Mostrar Abas',
           accelerator:process.platform == 'darwin' ? 'Command+T' : 'Ctrl+T',
           click(){
-            mainWindow.webContents.send('toggle:tabs');;
+            mainWindow.webContents.send('toggle_tabs');;
           }
         },
         {

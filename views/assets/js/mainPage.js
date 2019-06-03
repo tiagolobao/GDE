@@ -113,7 +113,9 @@ DomReady.ready(function() {
 
 });
 
-/* non global script */
+/**********************************************
+  non global script
+***********************************************/
 
 (function(){
 
@@ -144,7 +146,7 @@ DomReady.ready(function() {
 
 
   /* Toggle tab command */
-  ipcRenderer.on('toggle:tabs',()=>{
+  ipcRenderer.on('toggle_tabs',()=>{
     let tab = document.getElementsByClassName('tab')[0];
     if(tab.style.display == 'none'){
       tab.style.display = 'inline-block';

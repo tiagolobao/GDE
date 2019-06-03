@@ -82,6 +82,7 @@ hr.endtabcontent{
 
 /* Style the tab */
 .tab {
+  overflow-y: auto;
   float: left;
   background-color: #e8eddf;
   width: 160px; /* Dragble */
