@@ -6,3 +6,6 @@ dist
 #files
 *.tgz
 *.log
+
+#temp files from project
+/images/temp/

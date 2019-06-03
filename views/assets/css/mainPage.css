@@ -15,6 +15,29 @@ html, body{
   font: 400 13.3333px Arial;
 }
 
+span.add-img-btn i{
+  background-color: white;
+  border: solid 12px white;
+  border-radius: 15px;
+}
+
+td.element-img:hover span.add-img-btn{
+  opacity: 1;
+}
+
+span.add-img-btn{
+  display: block;
+  position: relative;
+  height: 0px;
+  width: 0px;
+  left: calc(50% - 31px);
+  bottom: 110px;
+  font-size: 50px;
+  text-shadow: #47474787 3px 3px 4px;
+  transition: 0.5s;
+  opacity: 0;
+}
+
 td.gde, td.ndp{
   text-align: center;
 }

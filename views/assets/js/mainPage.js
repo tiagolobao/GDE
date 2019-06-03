@@ -1,8 +1,21 @@
 /* Electron commands */
 const electron = require('electron');
 const {ipcRenderer} = electron;
+const { dialog } = electron.remote
 
 DomReady.ready(function() {
+
+  window.sendImg = function(elem) {
+    console.log(elem);
+    console.log(dialog);
+    dialog.showOpenDialog( filePaths => {
+      if (filePaths === undefined) return;
+      let response = ipcRenderer.sendSync('save_img',filePaths[0]);
+      elem.querySelector('img').src = '../images/temp/' + response;
+      console.log(response);
+    });
+  }
+
   //onChange event
   window.inputNumber = function(input,type) {
 
@@ -10,7 +23,6 @@ DomReady.ready(function() {
       rangeLimiter usage for handling exceptions
     */
     (function(){
-      console.log('eai?');
       let damage = input.parentElement.previousElementSibling.textContent;
       let val = parseInt(input.value);
       let min = 0;

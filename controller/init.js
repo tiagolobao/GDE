@@ -2,6 +2,7 @@
 module.exports = (appDir) => {
   const {app, BrowserWindow, Menu, ipcMain} = require('electron');
   const ejse = require('ejs-electron');
+  const fs = require('fs');
   const variables = require('./staticVar.js');
   let mainWindow;
 
@@ -27,7 +28,10 @@ module.exports = (appDir) => {
     //Dealing with the menu
     require('./menu.js')(Menu,mainWindow);
     //Dealing with ipc Requests
-    require('./ipc.js')(ipcMain,mainWindow);
+    require('./ipc.js')(ipcMain,mainWindow,{
+      dir: appDir,
+      fs: fs,
+    });
   });
 
   app.on('window-all-closed', function () {
@@ -36,6 +40,17 @@ module.exports = (appDir) => {
 
   app.on('activate', function () {
     if (mainWindow === null) createWindow();
+  });
+
+  app.on('will-quit', function () {
+    /* Delete temp files */
+    let tempDirectory = '/images/temp/';
+    let fileList = fs.readdirSync(appDir + tempDirectory);
+    if( fileList ){
+      fileList.forEach( file =>{
+        fs.unlinkSync( appDir + tempDirectory + file );
+      });
+    }
   });
 
 }

@@ -1,7 +1,34 @@
 
-module.exports = (ipcRenderer,mainWindow) => {
+module.exports = (ipcRenderer,mainWindow,other) => {
 
   const variables = require('./staticVar.js');
+
+
+  /* Used to generate unique names */
+  function makeid(length) {
+     var result           = '';
+     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+     var charactersLength = characters.length;
+     for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+     }
+     return result;
+  }
+
+  ipcRenderer.on('save_img',function(e, path){
+    try{
+      let fileName = makeid(10) + path.substr( path.length - 4, 4 );
+      let newPath = other.dir + '/images/temp/' + fileName;
+      other.fs.copyFileSync(path, newPath, err => {
+        if (err) throw err;
+        console.log(path + ' was copied to ' + newPath);
+      });
+      e.returnValue = fileName;
+    }
+    catch(err){
+      console.log(err);
+    }
+  });
 
   /*
     GDF calc request
@@ -103,7 +130,10 @@ module.exports = (ipcRenderer,mainWindow) => {
       <table class="element">
         <tr>
           <td class="element-id" colspan="4"><div contentEditable=true data-text="Local: ____"></div></td>
-          <td rowspan="9000" > <img class="center" src="assets/imagens/sem_imagem.png" height="150"> </td>
+          <td rowspan="9000" class="element-img" onclick="sendImg(this)">
+            <img class="center" src="assets/imagens/sem_imagem.png" height="150">
+            <span class="add-img-btn" > <i class="fas fa-file-upload"></i> </span>
+          </td>
         </tr>
         <tr>
           <th> Danos </th>
