@@ -3,6 +3,45 @@ module.exports = (ipcRenderer,mainWindow,other) => {
 
   const variables = require('./staticVar.js');
 
+  /*
+    Gererate results request
+  */
+  ipcRenderer.on('generate_results',function(e, gdf){
+
+    //Process gdf Values
+    gdf.forEach( (_gdf) => {
+      variables.elementos.forEach( elemento => {
+        if ( _gdf.id == elemento.id ){
+          _gdf.name = elemento.nome;
+          _gdf.fr = elemento.fr;
+        }
+      });
+    });
+
+    let gdt = gdf.reduce( (acc,_gdf) => acc + (_gdf.fr*_gdf.value) , 0 ) / gdf.reduce( (acc,_gdf) => acc + _gdf.fr , 0 );
+    //Search for ndp
+    for ( let i = 0; i < variables.niveis.length; i++ ){
+      if( variables.niveis[i].gdeMax > gdt && variables.niveis[i].gdeMin <= gdt )
+        gdt = { value: gdt, ...variables.niveis[i] };
+    }
+    other.ejse.data('gdf',gdf);
+    other.ejse.data('gdt',gdt);
+
+    //Create Window
+    resultsWindow = new other.browserWindow({
+      width: 595,
+      height: 842,
+      title:'Resultados'
+    });
+    if(process.env.NODE_ENV !== 'production')
+      resultsWindow.setMenuBarVisibility(false);
+    resultsWindow.loadURL('file://' + other.dir + '/views/results.ejs')
+
+    // Handle garbage collection
+    resultsWindow.on('close', function(){
+      resultsWindow = null;
+    });
+  });
 
   /* Used to generate unique names */
   function makeid(length) {

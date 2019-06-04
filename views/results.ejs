@@ -1,0 +1,64 @@
+<%
+  let rows = [];
+  gdf.forEach( _gdf => {
+    if ( _gdf.value != 0 ){
+      rows.push(`
+        <tr class="family">
+          <td class="name"> ${_gdf.name} </td>
+          <td class="gdf number"> ${_gdf.value} </td>
+          <td class="fr number"> ${_gdf.fr} </td>
+        </tr>
+      `);
+    }
+  });
+%>
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="assets/js/domready.js"></script>
+    <link href="assets/css/Chart.min.css" rel="stylesheet">
+    <link href="assets/css/all.css" rel="stylesheet"> <%# load fontawesome styles %>
+    <link href="assets/css/results.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <h2 style="text-align:center;"> Resultados </h2>
+
+    <div id="gdt">
+      <div>
+        <b> Grau de deterioração total </b>
+        <div> <%- gdt.value %> </div>
+      </div>
+      <div>
+        <b> Nível de deterioração da estrutura </b>
+        <div> <%- gdt.nivel %> </div>
+      </div>
+      <div>
+        <b> Ações a serem tomadas </b>
+        <div> <%- gdt.acao %> </div>
+      </div>
+    </div>
+
+    <table id="familias-avaliadas">
+      <tr>
+        <th> Elementos avaliados </th>
+        <th> Gdf </th>
+        <th> Fr </th>
+      </tr>
+
+      <%- rows.join('\n'); %>
+
+    </table>
+
+    <canvas id="familiasChart"></canvas>
+
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/results.js"></script>
+  </body>
+
+</html>
