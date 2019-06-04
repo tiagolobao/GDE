@@ -29,6 +29,8 @@ module.exports = (appDir) => {
     require('./menu.js')(Menu,mainWindow);
     //Dealing with ipc Requests
     require('./ipc.js')(ipcMain,mainWindow,{
+      ejse: ejse,
+      browserWindow: BrowserWindow,
       dir: appDir,
       fs: fs,
     });

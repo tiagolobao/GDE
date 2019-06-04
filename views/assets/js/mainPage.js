@@ -75,7 +75,6 @@ DomReady.ready(function() {
           gdeValues.push(parseFloat(value));
       });
       let response = ipcRenderer.sendSync('calc_gdf',gdeValues);
-      console.log(gdf);
       gdf.innerText = response.toFixed(2);
     })();
 
@@ -144,6 +143,18 @@ DomReady.ready(function() {
     document.getElementsByClassName('tab')[0].style.width = newWidth + 'px';
   };
 
+  /* Gererate results commands - gets info from the screen */
+  ipcRenderer.on('generate_results', function(){
+    let gdf = [];
+    document.querySelectorAll('.tabcontent').forEach( tab => {
+      if( tab.id != 'none' )
+        gdf.push( {
+          id: tab.id,
+          value: parseFloat(tab.querySelector('div.gdf td').innerText ),
+        } );
+    });
+    ipcRenderer.send('generate_results', gdf);
+  });
 
   /* Toggle tab command */
   ipcRenderer.on('toggle_tabs',()=>{

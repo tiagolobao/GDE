@@ -6,6 +6,13 @@ module.exports = (Menu, mainWindow) => {
       label: 'Opções',
       submenu:[
         {
+          label: 'Gerar Resultados',
+          accelerator:process.platform == 'darwin' ? 'Command+G' : 'Ctrl+G',
+          click(){
+            mainWindow.webContents.send('generate_results');;
+          }
+        },
+        {
           label: 'Esconder/Mostrar Abas',
           accelerator:process.platform == 'darwin' ? 'Command+T' : 'Ctrl+T',
           click(){
