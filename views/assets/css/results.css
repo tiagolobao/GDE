@@ -27,12 +27,9 @@ td.number{
   text-align: center;
 }
 
-div#cd DOCTYPEgdt{
-  padding: 10px;
-}
-
 div#gdt{
   margin: 30px 0px 30px 0px;
+  padding: 10px;
 }
 
 div#gdt div {
