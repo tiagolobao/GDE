@@ -1,6 +1,7 @@
 
 module.exports = (appDir) => {
-  const {app, BrowserWindow, Menu, ipcMain} = require('electron');
+  const electron = require('electron')
+  const {app, BrowserWindow, Menu, ipcMain} = electron;
   const ejse = require('ejs-electron');
   const fs = require('fs');
   const variables = require('./staticVar.js');
@@ -10,8 +11,8 @@ module.exports = (appDir) => {
 
   app.on('ready',()=>{
     mainWindow = new BrowserWindow({
-      width: 800,
-      height: 600,
+      width: electron.screen.getPrimaryDisplay().workAreaSize.width,
+      height: electron.screen.getPrimaryDisplay().workAreaSize.height,
       webPreferences: {
         nodeIntegration: true
       },
@@ -33,6 +34,7 @@ module.exports = (appDir) => {
       browserWindow: BrowserWindow,
       dir: appDir,
       fs: fs,
+      displaySize: electron.screen.getPrimaryDisplay().workAreaSize,
     });
   });
 

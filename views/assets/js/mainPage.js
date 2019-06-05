@@ -153,7 +153,11 @@ DomReady.ready(function() {
           value: parseFloat(tab.querySelector('div.gdf td').innerText ),
         } );
     });
-    ipcRenderer.send('generate_results', gdf);
+    let damageList = [];
+    document.querySelectorAll('.data-row').forEach( row => {
+      damageList.push( row.querySelector('td.damage').innerText );
+    });
+    ipcRenderer.send('generate_results', gdf, damageList);
   });
 
   /* Toggle tab command */

@@ -1,8 +1,8 @@
 <%
-  let rows = [];
+  let rowsFamily = [];
   gdf.forEach( _gdf => {
     if ( _gdf.value != 0 ){
-      rows.push(`
+      rowsFamily.push(`
         <tr class="family">
           <td class="name"> ${_gdf.name} </td>
           <td class="gdf number"> ${_gdf.value} </td>
@@ -10,6 +10,20 @@
         </tr>
       `);
     }
+  });
+
+  let rowsDamage = [];
+  let acc = 0;
+  damages.forEach( dam => {
+    acc += dam.percentage;
+    rowsDamage.push(`
+      <tr class="damage">
+        <td class="name"> ${dam.name} </td>
+        <td class="quantity number"> ${dam.quantity} </td>
+        <td class="percentage number"> ${dam.percentage} % </td>
+        <td class="number"> ${acc} % </td>
+      </tr>
+    `);
   });
 %>
 
@@ -32,7 +46,7 @@
     <div id="gdt">
       <div>
         <b> Grau de deterioração total </b>
-        <div> <%- gdt.value %> </div>
+        <div> <%- gdt.value.toFixed(2) %> </div>
       </div>
       <div>
         <b> Nível de deterioração da estrutura </b>
@@ -51,11 +65,26 @@
         <th> Fr </th>
       </tr>
 
-      <%- rows.join('\n'); %>
+      <%- rowsFamily.join('\n'); %>
 
     </table>
 
     <canvas id="familiasChart"></canvas>
+
+    <table id="ocorrencia-danos">
+      <tr>
+        <th> Tipo do dano </th>
+        <th> Quantidade </th>
+        <th> Porcentagem </th>
+        <th> Acumulado </th>
+      </tr>
+
+
+      <%- rowsDamage.join('\n'); %>
+
+    </table>
+
+    <canvas id="danosChart"></canvas>
 
     <script src="assets/js/Chart.min.js"></script>
     <script src="assets/js/results.js"></script>

@@ -13,10 +13,11 @@ th{
 }
 
 canvas{
-  margin-top: 50px;/
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
-table#familias-avaliadas{
+table{
   width: 100%;
   border: solid;
   border-collapse: collapse;

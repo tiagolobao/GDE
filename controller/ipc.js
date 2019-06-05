@@ -6,7 +6,7 @@ module.exports = (ipcRenderer,mainWindow,other) => {
   /*
     Gererate results request
   */
-  ipcRenderer.on('generate_results',function(e, gdf){
+  ipcRenderer.on('generate_results',function(e, gdf, damageList){
 
     //Process gdf Values
     gdf.forEach( (_gdf) => {
@@ -24,14 +24,36 @@ module.exports = (ipcRenderer,mainWindow,other) => {
       if( variables.niveis[i].gdeMax > gdt && variables.niveis[i].gdeMin <= gdt )
         gdt = { value: gdt, ...variables.niveis[i] };
     }
+
+
+    let damagesOrganized = []; //{name:, quantity:, percentage:}
+    damageList.forEach( (dam,i,arr) => {
+      if( arr.indexOf(dam) == i ){ //If is not repeated
+        let quantity = arr.reduce( (acc,e) => {
+            return ( e == dam ? acc+1 : acc );
+        }, 0);
+        damagesOrganized.push({
+          name: dam,
+          quantity: quantity,
+          percentage: (quantity * 100 / arr.length).toFixed(2),
+        });
+      }
+    });
+
     other.ejse.data('gdf',gdf);
     other.ejse.data('gdt',gdt);
+    other.ejse.data('damages',damagesOrganized);
+
+    //Calculate window size
+    let windowHeight = other.displaySize.height;
+    let windowWidth = windowHeight * 595 / 842; //A4 Size
 
     //Create Window
     resultsWindow = new other.browserWindow({
-      width: 595,
-      height: 842,
-      title:'Resultados'
+      width: windowWidth, //595
+      height: windowHeight, //842
+      title:'Resultados',
+      resizable: false,
     });
     if(process.env.NODE_ENV !== 'production')
       resultsWindow.setMenuBarVisibility(false);
@@ -138,7 +160,7 @@ module.exports = (ipcRenderer,mainWindow,other) => {
     // Getting html string
     e.returnValue = `
       <tr class="data-row">
-        <td>${data}</td>
+        <td class="damage">${data}</td>
         <td class="number"> <input type="number" class="fp" value="${fp}" onchange="inputNumber(this,'fp')"> </td>
         <td class="number"> <input type="number" class="fi" value="1" onchange="inputNumber(this,'fi')"> </td>
         <td class="number d"> --- </td>
