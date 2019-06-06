@@ -27,11 +27,10 @@ DomReady.ready(function() {
     (function(){
       let damage = input.closest('.data-row').querySelector('.damage').textContent;
       let val = parseInt(input.value);
-      let min = 1;
-      let max = 20;
-      if( type == 'fp' ){
-        max = 10;
-        min = ( damage == 'Fissuras' ? 2 : 1);
+      let min, max;
+      if( type == 'fp' && damage == 'fissuras'){
+        max = 5;
+        min = 2;
       }
       if( type == 'fi' ){
         min = 1;

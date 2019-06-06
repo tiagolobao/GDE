@@ -166,11 +166,13 @@ module.exports = (ipcRenderer,other) => {
         });
       }
     });
+    //Setting readonly
+    let readOnly = ( data == 'fissuras' ? '' : 'readonly="readonly"' );
     // Getting html string
     e.returnValue = `
       <tr class="data-row">
         <td class="damage">${data}</td>
-        <td class="number"> <input type="number" class="fp" value="${fp}" onchange="inputNumber(this,'fp')"> </td>
+        <td class="number"> <input type="number" class="fp" value="${fp}" ${readOnly} onchange="inputNumber(this,'fp')"> </td>
         <td class="number"> <input type="number" class="fi" value="1" onchange="inputNumber(this,'fi')"> </td>
         <td class="number d"> --- </td>
       </tr>
