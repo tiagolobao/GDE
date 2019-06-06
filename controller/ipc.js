@@ -6,6 +6,14 @@ module.exports = (ipcRenderer,other) => {
   const ejse = require('ejs-electron');
   const fs = require('fs');
   const variables = require('./staticVar.js');
+
+  /*
+    Send variables to the client
+  */
+  ipcRenderer.on('get_global', function(e) {
+    e.returnValue = variables;
+  });
+
   /*
     Gererate results request
   */
@@ -38,7 +46,7 @@ module.exports = (ipcRenderer,other) => {
         damagesOrganized.push({
           name: dam,
           quantity: quantity,
-          percentage: (quantity * 100 / arr.length).toFixed(2),
+          percentage: (quantity * 100 / arr.length).toFixed(variables.precision),
         });
       }
     });
@@ -233,3 +241,4 @@ module.exports = (ipcRenderer,other) => {
 
 
 }
+////

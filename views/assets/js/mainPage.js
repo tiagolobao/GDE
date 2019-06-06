@@ -1,7 +1,9 @@
 /* Electron commands */
 const electron = require('electron');
 const {ipcRenderer} = electron;
-const { dialog } = electron.remote
+const { dialog } = electron.remote;
+
+window.ipcVar = ipcRenderer.sendSync('get_global');
 
 DomReady.ready(function() {
 
@@ -55,10 +57,10 @@ DomReady.ready(function() {
         });
       });
       let response = ipcRenderer.sendSync('calc',toSend);
-      gde.innerText = response.gde.toFixed(2);
+      gde.innerText = response.gde.toFixed(ipcVar.precision);
       ndp.innerText = response.ndp.nivel;
       rows.forEach( (row,i) => {
-        row.querySelector('.d').innerText = response.d[i].toFixed(2);
+        row.querySelector('.d').innerText = response.d[i].toFixed(ipcVar.precision);
       });
     })();
 
@@ -75,7 +77,7 @@ DomReady.ready(function() {
           gdeValues.push(parseFloat(value));
       });
       let response = ipcRenderer.sendSync('calc_gdf',gdeValues);
-      gdf.innerText = response.toFixed(2);
+      gdf.innerText = response.toFixed(ipcVar.precision);
     })();
 
   }

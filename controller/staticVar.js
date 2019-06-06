@@ -130,6 +130,8 @@ let danosComposicaoArquitetonica = [
 
 module.exports = {
 
+  precision: 1,
+
   fpLimits:
   {
     min: 1,
