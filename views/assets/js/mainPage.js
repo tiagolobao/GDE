@@ -23,7 +23,7 @@ DomReady.ready(function() {
       rangeLimiter usage for handling exceptions
     */
     (function(){
-      let damage = input.parentElement.previousElementSibling.textContent;
+      let damage = input.closest('.data-row').querySelector('.damage').textContent;
       let val = parseInt(input.value);
       let min = 1;
       let max = 20;
@@ -43,7 +43,7 @@ DomReady.ready(function() {
     */
     (function(){
       let toSend = [];
-      let element = input.parentElement.parentElement.parentElement;
+      let element = input.closest('.element');
       let rows = element.querySelectorAll('.data-row');
       let gde = element.querySelector('.gde');
       let ndp = element.querySelector('.ndp');
@@ -66,7 +66,7 @@ DomReady.ready(function() {
      Update GDF - Grau de deterioração da família
     */
     (function(){
-      let tab = input.parentElement.parentElement.parentElement.parentElement.parentElement;
+      let tab = input.closest('.tabcontent');
       let gdf = tab.querySelector('.gdf td');
       let gdeValues = [];
       tab.querySelectorAll('td.gde').forEach( _gde => {
@@ -99,7 +99,7 @@ DomReady.ready(function() {
   window.selectChange = function (id,element){
     let selectedValue = element.value;
     let response = ipcRenderer.sendSync('add_row',selectedValue,id);
-    element.parentElement.parentElement.parentElement.insertAdjacentHTML('beforebegin', response);
+    element.closest('.add-row').insertAdjacentHTML('beforebegin', response);
     element.selectedIndex = 0;
   }
 
