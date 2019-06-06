@@ -68,7 +68,6 @@ DomReady.ready(function() {
     */
     (function(){
       let tab = input.closest('.tabcontent');
-      let gdf = tab.querySelector('.gdf td');
       let gdeValues = [];
       tab.querySelectorAll('td.gde').forEach( _gde => {
         let value = _gde.innerText;
@@ -76,7 +75,9 @@ DomReady.ready(function() {
           gdeValues.push(parseFloat(value));
       });
       let response = ipcRenderer.sendSync('calc_gdf',gdeValues);
-      gdf.innerText = response.toFixed(ipcVar.precision);
+      tab.querySelector('.gdf td.gdf-value').innerText = response.gdf.toFixed(ipcVar.precision);
+      tab.querySelector('.gdf td.gdeSum-value').innerText = response.gdeSum.toFixed(ipcVar.precision);
+      tab.querySelector('.gdf td.gdeMax-value').innerText = response.gdeMax.toFixed(ipcVar.precision);
     })();
 
   }

@@ -112,7 +112,11 @@ module.exports = (ipcRenderer,other) => {
     let gdf = gdeMax * Math.sqrt( 1 + (
       (gdeSum - gdeMax) / gdeSum
     ) );
-    e.returnValue = gdf;
+    e.returnValue = {
+      gdf: gdf,
+      gdeMax: gdeMax,
+      gdeSum: gdeSum,
+    };
 
   });
   /*
