@@ -1,38 +1,78 @@
-module.exports = (Menu, mainWindow) => {
-  // Create menu template
-  const mainMenuTemplate =  [
-    // Each object is a dropdown
-    {
-      label: 'Opções',
-      submenu:[
-        {
-          label: 'Gerar Resultados',
-          accelerator:process.platform == 'darwin' ? 'Command+G' : 'Ctrl+G',
-          click(){
-            mainWindow.webContents.send('generate_results');;
-          }
-        },
-        {
-          label: 'Esconder/Mostrar Abas',
-          accelerator:process.platform == 'darwin' ? 'Command+T' : 'Ctrl+T',
-          click(){
-            mainWindow.webContents.send('toggle_tabs');;
-          }
-        },
-        {
-          label: 'Sair',
-          accelerator:process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-          click(){
-            app.quit();
-          }
-        },
-      ]
-    }
-  ];
+module.exports = (Menu, targetWindow, type) => {
+
+  let menuTemplate = [];
+
+  if( type == 'mainMenu' ){
+    // Create menu template
+    menuTemplate =  [
+      // Each object is a dropdown
+      {
+        label: 'Opções',
+        submenu:[
+          {
+            label: 'Gerar Resultados',
+            accelerator:process.platform == 'darwin' ? 'Command+G' : 'Ctrl+G',
+            click(){
+              targetWindow.webContents.send('generate_results');;
+            }
+          },
+          {
+            label: 'Esconder/Mostrar Abas',
+            accelerator:process.platform == 'darwin' ? 'Command+T' : 'Ctrl+T',
+            click(){
+              targetWindow.webContents.send('toggle_tabs');;
+            }
+          },
+          {
+            label: 'Sair',
+            accelerator:process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+            click(){
+              app.quit();
+            }
+          },
+        ]
+      }
+    ];
+
+  }
+
+  else if( type == 'results' ){
+    // Create menu template
+    menuTemplate =  [
+      // Each object is a dropdown
+      {
+        label: 'Opções',
+        submenu:[
+          {
+            label: 'Download (xlsx)',
+            accelerator:process.platform == 'darwin' ? 'Command+D' : 'Ctrl+D',
+            click(){
+              targetWindow.webContents.send('download');;
+            }
+          },
+          {
+            label: 'Print',
+            accelerator:process.platform == 'darwin' ? 'Command+P' : 'Ctrl+P',
+            click(){
+              targetWindow.webContents.send('print');;
+            }
+          },
+          {
+            label: 'Sair',
+            accelerator:process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+            click(){
+              app.quit();
+            }
+          },
+        ]
+      }
+    ];
+
+  }
 
   // Add developer tools option if in dev
   if(process.env.NODE_ENV !== 'production'){
-    mainMenuTemplate.push({
+    menuTemplate.push({
       label: 'Developer Tools',
       submenu:[
         {
@@ -50,11 +90,11 @@ module.exports = (Menu, mainWindow) => {
   }
   // If OSX, add empty object to menu
   if(process.platform == 'darwin'){
-    mainMenuTemplate.unshift({});
+    menuTemplate.unshift({});
   }
 
   // Build menu from template
-  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+  const menu = Menu.buildFromTemplate(menuTemplate);
   // Insert menu
-  Menu.setApplicationMenu(mainMenu);
+  Menu.setApplicationMenu(menu);
 }

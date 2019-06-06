@@ -27,13 +27,11 @@ module.exports = (appDir) => {
       mainWindow = null;
     });
     //Dealing with the menu
-    require('./menu.js')(Menu,mainWindow);
+    require('./menu.js')(Menu,mainWindow,'mainMenu');
     //Dealing with ipc Requests
-    require('./ipc.js')(ipcMain,mainWindow,{
-      ejse: ejse,
-      browserWindow: BrowserWindow,
+    require('./ipc.js')(ipcMain,{
+      mainWindow: mainWindow,
       dir: appDir,
-      fs: fs,
       displaySize: electron.screen.getPrimaryDisplay().workAreaSize,
     });
   });

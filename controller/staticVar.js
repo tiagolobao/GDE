@@ -34,7 +34,7 @@ let danosVigas = [
 let danosLajes = [
   { nome: 'carbonatação', fp:3 },
   { nome: 'cobrimento deficiente', fp:3 },
-  { nome: 'contaminação por cloretos', fp:3 },
+  { nome: 'contaminação por cloretos', fp:4 },
   { nome: 'corrosão de armaduras', fp:5 },
   { nome: 'desagregação', fp:3 },
   { nome: 'desplacamento', fp:3 },

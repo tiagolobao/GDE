@@ -1,8 +1,11 @@
 
-module.exports = (ipcRenderer,mainWindow,other) => {
+module.exports = (ipcRenderer,other) => {
 
+  const electron = require('electron')
+  const {app, BrowserWindow, Menu, ipcMain} = electron;
+  const ejse = require('ejs-electron');
+  const fs = require('fs');
   const variables = require('./staticVar.js');
-
   /*
     Gererate results request
   */
@@ -40,25 +43,23 @@ module.exports = (ipcRenderer,mainWindow,other) => {
       }
     });
 
-    other.ejse.data('gdf',gdf);
-    other.ejse.data('gdt',gdt);
-    other.ejse.data('damages',damagesOrganized);
+    ejse.data('gdf',gdf);
+    ejse.data('gdt',gdt);
+    ejse.data('damages',damagesOrganized);
 
     //Calculate window size
     let windowHeight = other.displaySize.height;
     let windowWidth = windowHeight * 595 / 842; //A4 Size
 
     //Create Window
-    resultsWindow = new other.browserWindow({
+    resultsWindow = new BrowserWindow({
       width: windowWidth, //595
       height: windowHeight, //842
       title:'Resultados',
       resizable: false,
     });
-    if(process.env.NODE_ENV !== 'production')
-      resultsWindow.setMenuBarVisibility(false);
     resultsWindow.loadURL('file://' + other.dir + '/views/results.ejs')
-
+    require('./menu.js')(Menu,resultsWindow,'results');
     // Handle garbage collection
     resultsWindow.on('close', function(){
       resultsWindow = null;
@@ -83,7 +84,7 @@ module.exports = (ipcRenderer,mainWindow,other) => {
     try{
       let fileName = makeid(10) + path.substr( path.length - 4, 4 );
       let newPath = other.dir + '/images/temp/' + fileName;
-      other.fs.copyFileSync(path, newPath, err => {
+      fs.copyFileSync(path, newPath, err => {
         if (err) throw err;
       });
       e.returnValue = fileName;
@@ -116,8 +117,8 @@ module.exports = (ipcRenderer,mainWindow,other) => {
     let d = [];
     rows.forEach( row => {
       d.push(( row.fi > 2 ?
-        ( 6 * row.fi - 14 ) * row.fp :
-        0.4 * row.fi * row.fp
+        ( 12 * row.fi - 28 ) * row.fp :
+        0.8 * row.fi * row.fp
       ));
     });
 
@@ -192,11 +193,14 @@ module.exports = (ipcRenderer,mainWindow,other) => {
     response.innerHTML = `
       <table class="element">
         <tr>
-          <td class="element-id" colspan="4"><div contentEditable=true data-text="Local: ____"></div></td>
+          <td class="name-element element-id" colspan="4"><div contentEditable=true data-text="Nome do elemento"></div></td>
           <td rowspan="9000" class="element-img" onclick="sendImg(this)">
             <img class="center" src="assets/imagens/sem_imagem.png" height="150">
             <span class="add-img-btn" > <i class="fas fa-file-upload"></i> </span>
           </td>
+        </tr>
+        <tr>
+          <td class="local-element element-id" colspan="4"><div contentEditable=true data-text="Local do elemento"></div></td>
         </tr>
         <tr>
           <th> Danos </th>
@@ -224,7 +228,7 @@ module.exports = (ipcRenderer,mainWindow,other) => {
         </tr>
       </table> <!-- .element -->
     `;
-    mainWindow.webContents.send('add_element', response);
+    other.mainWindow.webContents.send('add_element', response);
   });
 
 
