@@ -96,11 +96,14 @@ DomReady.ready(function() {
   }
 
   /* Onchange select */
-  window.selectChange = function (id,element){
-    let selectedValue = element.value;
+  window.selectChange = function (id,selector){
+    let selectedValue = selector.value;
     let response = ipcRenderer.sendSync('add_row',selectedValue,id);
-    element.closest('.add-row').insertAdjacentHTML('beforebegin', response);
-    element.selectedIndex = 0;
+    selector.closest('.add-row').insertAdjacentHTML('beforebegin', response);
+    selector.selectedIndex = 0;
+    // startValue for D
+    let rows = selector.closest('.element').querySelectorAll('.data-row');
+    rows[rows.length-1].querySelector('td.number input').onchange();
   }
 
   /* Limit input function */
