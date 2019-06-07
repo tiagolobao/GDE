@@ -7,6 +7,25 @@ window.ipcVar = ipcRenderer.sendSync('get_global');
 
 DomReady.ready(function() {
 
+  window.deleteRow = function(btn){
+    let element = btn.closest('.element');
+    let gde = element.querySelector('.gde');
+    let ndp = element.querySelector('.ndp');
+
+    btn.closest('.data-row').remove();
+    let triggerer = element.querySelector('.data-row td.number input');
+
+    if( triggerer ){
+      triggerer.onchange();
+    }
+    else{
+      gde.innerText = 0;
+      ndp.innerText = 'Baixo';
+    }
+
+    updateGdf(element);
+  }
+
   window.updateGdf = function(triggerer){
     let tab = triggerer.closest('.tabcontent');
     let gdeValues = [];
@@ -24,6 +43,8 @@ DomReady.ready(function() {
       });
       response = ipcRenderer.sendSync('calc_gdf',gdeValues);
     }
+    if (!response.gdf) response.gdf = 0;
+    console.log(response);
     tab.querySelector('.gdf td.gdf-value').innerText = response.gdf.toFixed(ipcVar.precision);
     tab.querySelector('.gdf td.gdeSum-value').innerText = response.gdeSum.toFixed(ipcVar.precision);
     tab.querySelector('.gdf td.gdeMax-value').innerText = response.gdeMax.toFixed(ipcVar.precision);
@@ -126,8 +147,7 @@ DomReady.ready(function() {
     selector.closest('.add-row').insertAdjacentHTML('beforebegin', response);
     selector.selectedIndex = 0;
     // startValue for D
-    let rows = selector.closest('.element').querySelectorAll('.data-row');
-    rows[rows.length-1].querySelector('td.number input').onchange();
+    selector.closest('.element').querySelector('.data-row td.number input').onchange();
   }
 
   /* Limit input function */

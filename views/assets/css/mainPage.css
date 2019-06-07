@@ -15,6 +15,18 @@ html, body{
   font: 400 13.3333px Arial;
 }
 
+span.delete-row-btn{
+  display: inline;
+  opacity: 0;
+  transition: 0.5s;
+  float: right;
+  color: red;
+}
+
+tr.data-row td.damage:hover span.delete-row-btn{
+  opacity: 1;
+}
+
 span.duplicate-btn.element-action-btn{
   bottom: -30px;
 }

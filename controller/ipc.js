@@ -107,11 +107,14 @@ module.exports = (ipcRenderer,other) => {
   */
   ipcRenderer.on('calc_gdf',function(e, gde){
 
-    let gdeMax = Math.max.apply(null, gde);
-    let gdeSum = gde.reduce( (acc,val) => (acc+val), 0 );
-    let gdf = gdeMax * Math.sqrt( 1 + (
-      (gdeSum - gdeMax) / gdeSum
-    ) );
+    let gdf = 0, gdeMax = 0, gdeSum = 0;
+    if( gde ){
+      gdeMax = Math.max.apply(null, gde);
+      gdeSum = gde.reduce( (acc,val) => (acc+val), 0 );
+      gdf = gdeMax * Math.sqrt( 1 + (
+        (gdeSum - gdeMax) / gdeSum
+      ) );
+    }
     e.returnValue = {
       gdf: gdf,
       gdeMax: gdeMax,
@@ -175,7 +178,7 @@ module.exports = (ipcRenderer,other) => {
     // Getting html string
     e.returnValue = `
       <tr class="data-row">
-        <td class="damage">${data}</td>
+        <td class="damage">${data} <span class="delete-row-btn" onclick="deleteRow(this)"> <i class="fas fa-trash-alt"></i> </span> </td>
         <td class="number"> <input type="number" class="fp" value="${fp}" ${readOnly} onchange="inputNumber(this,'fp')"> </td>
         <td class="number"> <input type="number" class="fi" value="1" onchange="inputNumber(this,'fi')"> </td>
         <td class="number d"> --- </td>
