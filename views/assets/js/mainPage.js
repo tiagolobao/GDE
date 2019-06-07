@@ -195,7 +195,7 @@ DomReady.ready(function() {
   });
 
   ipcRenderer.on('add_element', function(e, data){
-    document.querySelector('#' + data.elementId).insertAdjacentHTML('afterbegin', data.innerHTML);
+    document.querySelector('#' + data.elementId +  ' hr.endtabcontent').insertAdjacentHTML('beforebegin', data.innerHTML);
   });
 
 })();
