@@ -212,6 +212,10 @@ module.exports = (ipcRenderer,other) => {
             <img class="center" src="assets/imagens/sem_imagem.png" height="150">
             <span class="add-img-btn" > <i class="fas fa-file-upload"></i> </span>
           </td>
+          <td rowspan="9000" class="actions-btns">
+            <span class="delete-btn element-action-btn" onclick="deleteElement(this)"> <i class="fas fa-trash-alt"></i> </span>
+            <span class="duplicate-btn element-action-btn" onclick="duplicateElement(this)"> <i class="fas fa-copy"></i> </span>
+          </td>
         </tr>
         <tr>
           <td class="local-element element-id" colspan="4"><div contentEditable=true data-text="Local do elemento"></div></td>

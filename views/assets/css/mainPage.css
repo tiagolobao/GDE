@@ -15,6 +15,25 @@ html, body{
   font: 400 13.3333px Arial;
 }
 
+span.duplicate-btn.element-action-btn{
+  bottom: -30px;
+}
+
+span.delete-btn.element-action-btn{
+  top: -30px;
+}
+
+span.element-action-btn{
+  display: block;
+  font-size: 20px;
+  position: relative;
+  transition: 0.5s;
+}
+
+span.element-action-btn:hover{
+  color: #f5cb5c;
+}
+
 div.gdf th, div.gdf td{
   padding: 5px;
 }

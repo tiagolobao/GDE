@@ -7,6 +7,43 @@ window.ipcVar = ipcRenderer.sendSync('get_global');
 
 DomReady.ready(function() {
 
+  window.updateGdf = function(triggerer){
+    let tab = triggerer.closest('.tabcontent');
+    let gdeValues = [];
+    let response = {
+      gdf: 0,
+      gdeSum: 0,
+      gdeMax: 0,
+    }
+    let gdeNodes = tab.querySelectorAll('td.gde');
+    if(gdeNodes.length > 0){
+      gdeNodes.forEach( _gde => {
+        let value = _gde.innerText;
+        if( value != '---' )
+          gdeValues.push(parseFloat(value));
+      });
+      response = ipcRenderer.sendSync('calc_gdf',gdeValues);
+    }
+    tab.querySelector('.gdf td.gdf-value').innerText = response.gdf.toFixed(ipcVar.precision);
+    tab.querySelector('.gdf td.gdeSum-value').innerText = response.gdeSum.toFixed(ipcVar.precision);
+    tab.querySelector('.gdf td.gdeMax-value').innerText = response.gdeMax.toFixed(ipcVar.precision);
+  }
+
+  window.deleteElement = function(btn) {
+    let tab = btn.closest('div.tabcontent');
+    let ok = confirm("Deseja realmente deletar o elemento?");
+    if(ok) {
+      btn.closest('.element').remove();
+      updateGdf(tab);
+    }
+  }
+
+  window.duplicateElement = function(btn) {
+    let element = btn.closest('.element');
+    element.insertAdjacentHTML('afterend', element.outerHTML);
+    updateGdf(btn);
+  }
+
   window.sendImg = function(elem) {
     console.log(elem);
     console.log(dialog);
@@ -63,22 +100,7 @@ DomReady.ready(function() {
       });
     })();
 
-    /*
-     Update GDF - Grau de deterioração da família
-    */
-    (function(){
-      let tab = input.closest('.tabcontent');
-      let gdeValues = [];
-      tab.querySelectorAll('td.gde').forEach( _gde => {
-        let value = _gde.innerText;
-        if( value != '---' )
-          gdeValues.push(parseFloat(value));
-      });
-      let response = ipcRenderer.sendSync('calc_gdf',gdeValues);
-      tab.querySelector('.gdf td.gdf-value').innerText = response.gdf.toFixed(ipcVar.precision);
-      tab.querySelector('.gdf td.gdeSum-value').innerText = response.gdeSum.toFixed(ipcVar.precision);
-      tab.querySelector('.gdf td.gdeMax-value').innerText = response.gdeMax.toFixed(ipcVar.precision);
-    })();
+    updateGdf(input);
 
   }
 
