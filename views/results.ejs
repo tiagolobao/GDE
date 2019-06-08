@@ -15,13 +15,13 @@
   let rowsDamage = [];
   let acc = 0;
   damages.forEach( dam => {
-    acc += parseFloat(dam.percentage).toFixed(2);
+    acc = acc + parseFloat(dam.percentage);
     rowsDamage.push(`
       <tr class="damage">
         <td class="name"> ${dam.name} </td>
         <td class="quantity number"> ${dam.quantity} </td>
         <td class="percentage number"> ${dam.percentage} % </td>
-        <td class="number"> ${acc} % </td>
+        <td class="number"> ${acc.toFixed(1)} % </td>
       </tr>
     `);
   });
