@@ -215,6 +215,7 @@ DomReady.ready(function() {
       for(let i = 0; i < tabs.length; i++){
         tabs[i].style.width = 'calc(100% - ' + lastTabContentWidth + 'px)';
         tabs[i].style['margin-left'] = lastTabContentWidth + 'px';
+        document.querySelector('#width-selector').style.display = 'inline-block';
       }
     }
     else{
@@ -222,6 +223,7 @@ DomReady.ready(function() {
       for(let i = 0; i < tabs.length; i++){
         tabs[i].style.width = '100%';
         tabs[i].style['margin-left'] = '0px';
+        document.querySelector('#width-selector').style.display = 'none';
       }
     }
   });
