@@ -65,6 +65,9 @@ module.exports = (ipcRenderer,other) => {
       height: windowHeight, //842
       title:'Resultados',
       resizable: false,
+      webPreferences: {
+        nodeIntegration: true
+      },
     });
     resultsWindow.loadURL('file://' + other.dir + '/views/results.ejs')
     //require('./menu.js')(app, Menu, resultsWindow, 'results');

@@ -36,7 +36,22 @@ div#gdt div {
     margin-top: 10px;
 }
 
-#printPageButton {
+#print-btn{
+  right: 50px;
+  top: 50px;
+}
+
+#excel-btn{
+  right: 110px;
+  top: 50px;
+}
+
+/* why? */
+div#excel-btn i {
+    left: 33%;
+}
+
+div.fixed-btn {
   border: solid 3px white;
   color: white;
   border-radius: 100%;
@@ -46,18 +61,16 @@ div#gdt div {
   display: block;
   position: fixed;
   transition: 0.5s;
-
-  right: 50px;
-  top: 50px;
 }
-#printPageButton i{
+
+div.fixed-btn i{
   position: relative;
   left: 25%;
   top: 25%;
   font-size: 25px;
 }
 
-#printPageButton:hover {
+div.fixed-btn:hover {
   background-color: #f5cb5c;
   color: black;
 }

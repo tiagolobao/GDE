@@ -1,8 +1,24 @@
+/* Electron commands */
+const electron = require('electron');
+const {ipcRenderer} = electron;
+const { dialog } = electron.remote;
 
 (function() {
 
-  document.querySelector('#printPageButton').addEventListener('click',()=>{
+  document.querySelector('div#print-btn').addEventListener('click',()=>{
     window.print();
+  });
+
+  document.querySelector('div#excel-btn').addEventListener('click',()=>{
+    dialog.showOpenDialog({
+      title: 'Salvar os resultados em planilha',
+      properties: [
+        'openDirectory',
+      ],
+    }, path => {
+      if (path === undefined) return;
+      ipcRenderer.send('export_excel',path);
+    });
   });
 
   let gdf = {
