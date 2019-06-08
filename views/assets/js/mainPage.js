@@ -44,7 +44,6 @@ DomReady.ready(function() {
       response = ipcRenderer.sendSync('calc_gdf',gdeValues);
     }
     if (!response.gdf) response.gdf = 0;
-    console.log(response);
     tab.querySelector('.gdf td.gdf-value').innerText = response.gdf.toFixed(ipcVar.precision);
     tab.querySelector('.gdf td.gdeSum-value').innerText = response.gdeSum.toFixed(ipcVar.precision);
     tab.querySelector('.gdf td.gdeMax-value').innerText = response.gdeMax.toFixed(ipcVar.precision);
@@ -66,13 +65,10 @@ DomReady.ready(function() {
   }
 
   window.sendImg = function(elem) {
-    console.log(elem);
-    console.log(dialog);
     dialog.showOpenDialog( filePaths => {
       if (filePaths === undefined) return;
       let response = ipcRenderer.sendSync('save_img',filePaths[0]);
       elem.querySelector('img').src = '../images/temp/' + response;
-      console.log(response);
     });
   }
 
