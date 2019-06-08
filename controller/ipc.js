@@ -67,7 +67,8 @@ module.exports = (ipcRenderer,other) => {
       resizable: false,
     });
     resultsWindow.loadURL('file://' + other.dir + '/views/results.ejs')
-    require('./menu.js')(Menu,resultsWindow,'results');
+    //require('./menu.js')(app, Menu, resultsWindow, 'results');
+    resultsWindow.setMenuBarVisibility(false);
     // Handle garbage collection
     resultsWindow.on('close', function(){
       resultsWindow = null;

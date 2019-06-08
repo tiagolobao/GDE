@@ -1,6 +1,10 @@
 
 (function() {
 
+  document.querySelector('#printPageButton').addEventListener('click',()=>{
+    window.print();
+  });
+
   let gdf = {
     name: [],
     value: [],

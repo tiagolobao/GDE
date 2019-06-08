@@ -1,4 +1,4 @@
-module.exports = (Menu, targetWindow, type) => {
+module.exports = (app, Menu, targetWindow, type) => {
 
   let menuTemplate = [];
 
