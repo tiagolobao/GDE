@@ -6,12 +6,31 @@ module.exports = (ipcRenderer,other) => {
   const ejse = require('ejs-electron');
   const fs = require('fs');
   const variables = require('./staticVar.js');
+  const xlsx = require('node-xlsx').default;
 
   /*
     Send variables to the client
   */
   ipcRenderer.on('get_global', function(e) {
     e.returnValue = variables;
+  });
+
+  ipcRenderer.on('export_excel', function(e,path){
+    const data = [
+      [1, 2, 3],
+      [true, false, null, 'sheetjs'],
+      ['foo', 'bar', new Date('2014-02-19T14:30Z'), '0.3'],
+      ['baz', null, 'qux']
+    ];
+    const options = {};
+    let buffer = xlsx.build([{name: "GDE", data: data}], options);
+    fs.writeFile(path + '/Relatório GDE.xlsx', buffer, function(err) {
+      if(err) {
+          return console.log(err);
+      }
+      console.log("Saved xlsx");
+    });
+
   });
 
   /*

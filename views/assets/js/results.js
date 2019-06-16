@@ -17,7 +17,7 @@ const { dialog } = electron.remote;
       ],
     }, path => {
       if (path === undefined) return;
-      ipcRenderer.send('export_excel',path);
+      ipcRenderer.send('export_excel',path[0]);
     });
   });
 
