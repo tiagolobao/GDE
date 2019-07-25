@@ -7,6 +7,88 @@ window.ipcVar = ipcRenderer.sendSync('get_global');
 
 DomReady.ready(function() {
 
+  window.getAllData = function(){
+
+    /*******************
+    buffer[i] => a tab
+    buffet[i].elementList[j] => an element
+    buffet[i].elementList[j].damages[k] => a damage
+
+    [
+      {
+        id
+        gdf
+        gdeSum
+        gdeMax
+        elementList
+        [
+          {
+            name
+            local
+            GDE
+            NDP
+            photos
+            damages
+              [
+                {
+                  name
+                  fp
+                  fi
+                  D
+                }
+              ]
+          }
+        ]
+      }
+    ]
+    **********************/
+    buffer = [];
+    tabs = document.querySelectorAll('div.tabcontent');
+
+    //Add tab layer
+    tabs.forEach( tab => {
+      if( tab.id == "none" ) return;
+      buffer.push({
+        id: tab.id,
+        gdf: tab.querySelector('td.gdf-value').innerText,
+        gdeSum: tab.querySelector('td.gdeSum-value').innerText,
+        gdeMax: tab.querySelector('td.gdeMax-value').innerText,
+        elementList: [],
+      });
+    });
+
+    //Add elementList layer
+    buffer.forEach( tab => {
+      document.querySelectorAll('div.tabcontent#' + tab.id + ' table.element').forEach( element => {
+        tab.elementList.push({
+          name: element.querySelector('td.name-element div').innerText,
+          local: element.querySelector('td.local-element div').innerText,
+          gde: element.querySelector('td.gde').innerText,
+          ndp: element.querySelector('td.ndp').innerText,
+          photos: element.querySelector('td.element-img'),
+          damages: [],
+        });
+      });
+    });
+
+    //Add damage layer
+    buffer.forEach( tab => {
+      tab.elementList.forEach( (element,i) => {
+        document.querySelectorAll('div.tabcontent#' + tab.id + ' table.element')[i].
+        querySelectorAll('tr.data-row').forEach( damage => {
+          element.damages.push({
+            name: damage.querySelector('td.damage').innerText,
+            fp: damage.querySelector('input.fp').value,
+            fi: damage.querySelector('input.fi').value,
+            d: damage.querySelector('td.d').innerText,
+          });
+        });
+      });
+    });
+
+    return buffer;
+  }
+
   window.deleteRow = function(btn){
     let element = btn.closest('.element');
     let gde = element.querySelector('.gde');
