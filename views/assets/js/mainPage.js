@@ -8,7 +8,21 @@ window.ipcLastChanges = ipcRenderer.sendSync('get_lastChanges');
 
 DomReady.ready(function() {
 
+  //Reput last changes
+  if( ipcLastChanges != null ){
+    ipcLastChanges.forEach( tab => {
+      tab.elementList.forEach( element => {
+        document.querySelector('#' + tab.id +  ' hr.endtabcontent').insertAdjacentHTML('beforebegin', element.htmlNode);
+      });
+      let tabNode = document.querySelector('div#' + tab.id + '.tabcontent');
+      tabNode.querySelector('td.gdf-value').innerText = tab.gdf;
+      tabNode.querySelector('td.gdeSum-value').innerText = tab.gdeSum;
+      tabNode.querySelector('td.gdeMax-value').innerText = tab.gdeMax;
+    });
+  }
+
   window.getAllData = function(){
+
 
     /*******************
     buffer[i] => a tab
@@ -24,6 +38,7 @@ DomReady.ready(function() {
         elementList
         [
           {
+            htmlNode
             name
             local
             GDE
@@ -62,6 +77,7 @@ DomReady.ready(function() {
     buffer.forEach( tab => {
       document.querySelectorAll('div.tabcontent#' + tab.id + ' table.element').forEach( element => {
         tab.elementList.push({
+          htmlNode: element.outerHTML,
           name: element.querySelector('td.name-element div').innerText,
           local: element.querySelector('td.local-element div').innerText,
           gde: element.querySelector('td.gde').innerText,
