@@ -14,16 +14,30 @@ module.exports = (ipcRenderer,other) => {
   ipcRenderer.on('get_global', function(e) {
     e.returnValue = variables;
   });
+  ipcRenderer.on('get_lastChanges', function(e) {
+    if( fs.existsSync('tempDB.json') ){
+      const rawdata = fs.readFileSync('tempDB.json');
+      e.returnValue = JSON.parse(rawdata);
+    }
+    else{
+      e.returnValue = null;
+    }
+  });
 
-  ipcRenderer.on('export_excel', function(e,path){
-    const data = [
+  ipcRenderer.on('save_changes', function(e,data){
+    fs.writeFileSync('tempDB.json', data);
+  });
+
+  ipcRenderer.on('export_excel', function(e,path,datas){
+    fs.writeFileSync('tempDB.json', datas); //Saving changes
+    const xlsxfy = [
       [1, 2, 3],
       [true, false, null, 'sheetjs'],
       ['foo', 'bar', new Date('2014-02-19T14:30Z'), '0.3'],
       ['baz', null, 'qux']
     ];
     const options = {};
-    let buffer = xlsx.build([{name: "GDE", data: data}], options);
+    let buffer = xlsx.build([{name: "GDE", data: xlsxfy}], options);
     fs.writeFile(path + '/Relatório GDE.xlsx', buffer, function(err) {
       if(err) {
           return console.log(err);

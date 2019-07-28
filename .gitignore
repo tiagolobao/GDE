@@ -9,3 +9,4 @@ dist
 
 #temp files from project
 /images/temp/
+tempDB.json

@@ -4,6 +4,7 @@ const {ipcRenderer} = electron;
 const { dialog } = electron.remote;
 
 window.ipcVar = ipcRenderer.sendSync('get_global');
+window.ipcLastChanges = ipcRenderer.sendSync('get_lastChanges');
 
 DomReady.ready(function() {
 
@@ -318,6 +319,26 @@ DomReady.ready(function() {
 
   ipcRenderer.on('add_element', function(e, data){
     document.querySelector('#' + data.elementId +  ' hr.endtabcontent').insertAdjacentHTML('beforebegin', data.innerHTML);
+  });
+
+  //Save changes
+  ipcRenderer.on('save_changes',()=>{
+    let data = JSON.stringify(window.getAllData());
+    ipcRenderer.send('save_changes',data);
+  });
+
+  //Export to excel
+  ipcRenderer.on('export_excel',()=>{
+    const data = window.getAllData();
+    dialog.showOpenDialog({
+      title: 'Salvar os resultados em planilha',
+      properties: [
+        'openDirectory',
+      ],
+    }, path => {
+      if (path === undefined) return;
+      ipcRenderer.send('export_excel', path[0], data);
+    });
   });
 
 })();

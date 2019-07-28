@@ -10,6 +10,20 @@ module.exports = (app, Menu, targetWindow, type) => {
         label: 'Opções',
         submenu:[
           {
+            label: 'Salvar Alterações',
+            accelerator:process.platform == 'darwin' ? 'Command+S' : 'Ctrl+S',
+            click(){
+              targetWindow.webContents.send('save_changes');
+            }
+          },
+          {
+            label: 'Exportar .xlsx',
+            accelerator:process.platform == 'darwin' ? 'Command+E' : 'Ctrl+E',
+            click(){
+              targetWindow.webContents.send('export_excel');;
+            }
+          },
+          {
             label: 'Gerar Resultados',
             accelerator:process.platform == 'darwin' ? 'Command+G' : 'Ctrl+G',
             click(){
