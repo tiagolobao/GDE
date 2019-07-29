@@ -240,3 +240,53 @@ button.add-element:hover {
 [contentEditable=true]:empty:not(:focus):before{
     content:attr(data-text)
 }
+
+.floatBox{
+  /* Transition parameters */
+  -webkit-transition: right 2s;
+  transition: right 2s;
+
+  /* Fixed Parameters */
+  text-align: center;
+  padding: 0px 15px;
+  position: fixed;
+  border-radius: 10px;
+  padding-right: 130px;
+}
+
+.floatBox.show{
+  right: -100px;
+}
+
+.floatBox > span {
+  text-decoration: none;
+	font-size: 20px;
+  line-height: 45px;
+	font-family: 'Dosis', sans-serif;
+	color: green;
+	text-transform: uppercase;
+}
+
+.floatBox i {
+    margin-top: -18px;
+    position: relative;
+    left: -3px;
+}
+
+.savedChanges{
+    /* parametros da animação */
+  -webkit-animation: agenda 7s;
+  -moz-animation: agenda 7s;
+  -ms-animation: agenda 7s;
+  -o-animation: agenda 7s;
+  animation: agenda 7s;
+
+  right: -640px;
+  top: 50px;
+  background-color: white;
+  border-color: #223879;
+  border: solid;
+}
+.savedChanges a{
+  color: #223879;
+}

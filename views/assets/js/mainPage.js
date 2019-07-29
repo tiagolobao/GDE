@@ -341,6 +341,12 @@ DomReady.ready(function() {
   ipcRenderer.on('save_changes',()=>{
     let data = JSON.stringify(window.getAllData());
     ipcRenderer.send('save_changes',data);
+    let box = document.querySelector('div.floatBox.savedChanges');
+    box.classList.add('show');
+    setTimeout(
+      () => box.classList.remove('show')
+      ,3000
+    );
   });
 
   //Export to excel
