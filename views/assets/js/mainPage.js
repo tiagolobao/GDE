@@ -5,6 +5,7 @@ const { dialog } = electron.remote;
 
 window.ipcVar = ipcRenderer.sendSync('get_global');
 window.ipcLastChanges = ipcRenderer.sendSync('get_lastChanges');
+window.changesHistory = [];
 
 DomReady.ready(function() {
 
@@ -149,6 +150,7 @@ DomReady.ready(function() {
   }
 
   window.deleteElement = function(btn) {
+    window.changesHistory.push(document.querySelector('body').innerHTML);
     let tab = btn.closest('div.tabcontent');
     let ok = confirm("Deseja realmente deletar o elemento?");
     if(ok) {
@@ -158,12 +160,14 @@ DomReady.ready(function() {
   }
 
   window.duplicateElement = function(btn) {
+    window.changesHistory.push(document.querySelector('body').innerHTML);
     let element = btn.closest('.element');
     element.insertAdjacentHTML('afterend', element.outerHTML);
     updateGdf(btn);
   }
 
   window.sendImg = function(elem) {
+    window.changesHistory.push(document.querySelector('body').innerHTML);
     dialog.showOpenDialog( filePaths => {
       if (filePaths === undefined) return;
       let response = ipcRenderer.sendSync('save_img',filePaths[0]);
@@ -177,6 +181,7 @@ DomReady.ready(function() {
     /*
       rangeLimiter usage for handling exceptions
     */
+    window.changesHistory.push(document.querySelector('body').innerHTML);
     (function(){
       let damage = input.closest('.data-row').querySelector('.damage').textContent;
       let val = parseInt(input.value);
@@ -237,6 +242,7 @@ DomReady.ready(function() {
 
   /* Onchange select */
   window.selectChange = function (id,selector){
+    window.changesHistory.push(document.querySelector('body').innerHTML);
     let selectedValue = selector.value;
     let response = ipcRenderer.sendSync('add_row',selectedValue,id);
     selector.closest('.add-row').insertAdjacentHTML('beforebegin', response);
@@ -334,6 +340,7 @@ DomReady.ready(function() {
   });
 
   ipcRenderer.on('add_element', function(e, data){
+    window.changesHistory.push(document.querySelector('body').innerHTML);
     document.querySelector('#' + data.elementId +  ' hr.endtabcontent').insertAdjacentHTML('beforebegin', data.innerHTML);
   });
 
@@ -347,6 +354,23 @@ DomReady.ready(function() {
       () => box.classList.remove('show')
       ,3000
     );
+  });
+
+  //Undo Changes
+  ipcRenderer.on('undo',()=>{
+    if( window.changesHistory.length > 0){
+      const html = window.changesHistory.pop();
+      let body = document.querySelector('body');
+      body.innerHTML = '';
+      body.insertAdjacentHTML('beforebegin',html);
+      document.querySelectorAll('.tabcontent').forEach((tab)=>{
+        if(tab.id == 'none') return;
+        let query = '#' + tab.id + ' button.add-element';
+        document.querySelector(query).addEventListener('click',()=>{
+          ipcRenderer.send('add_element', tab.id);
+        });
+      });
+    }
   });
 
   //Export to excel

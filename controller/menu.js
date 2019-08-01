@@ -38,6 +38,13 @@ module.exports = (app, Menu, targetWindow, type) => {
             }
           },
           {
+            label: 'Desfazer',
+            accelerator:process.platform == 'darwin' ? 'Command+Z' : 'Ctrl+Z',
+            click(){
+              targetWindow.webContents.send('undo');;
+            }
+          },
+          {
             label: 'Sair',
             accelerator:process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
             click(){
