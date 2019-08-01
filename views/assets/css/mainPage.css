@@ -290,3 +290,11 @@ button.add-element:hover {
 .savedChanges a{
   color: #223879;
 }
+
+td.actions-btns{
+  width: 1px;
+}
+
+td.element-img{
+  width: 1px;
+}

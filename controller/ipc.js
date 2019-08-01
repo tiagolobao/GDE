@@ -249,7 +249,7 @@ module.exports = (ipcRenderer,other) => {
         <tr>
           <td class="name-element element-id" colspan="4"><div contentEditable=true data-text="Nome do elemento"></div></td>
           <td rowspan="9000" class="element-img" onclick="sendImg(this)">
-            <img class="center" src="assets/imagens/sem_imagem.png" height="150">
+            <img class="center" src="assets/imagens/sem_imagem.png" width="300">
             <span class="add-img-btn" > <i class="fas fa-file-upload"></i> </span>
           </td>
           <td rowspan="9000" class="actions-btns">
