@@ -77,13 +77,19 @@ DomReady.ready(function() {
     //Add elementList layer
     buffer.forEach( tab => {
       document.querySelectorAll('div.tabcontent#' + tab.id + ' table.element').forEach( element => {
+        let photos = [];
+        document.querySelectorAll('td.element-img img').forEach((img) => {
+          const src = img.getAttribute('src');
+          if(src != 'assets/imagens/sem_imagem.png') photos.push(src);
+        });
+        console.log(photos);
         tab.elementList.push({
           htmlNode: element.outerHTML,
           name: element.querySelector('td.name-element div').innerText,
           local: element.querySelector('td.local-element div').innerText,
           gde: element.querySelector('td.gde').innerText,
           ndp: element.querySelector('td.ndp').innerText,
-          photos: element.querySelector('td.element-img'),
+          photos: photos,
           damages: [],
         });
       });
