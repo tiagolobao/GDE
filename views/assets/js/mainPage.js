@@ -309,7 +309,7 @@ DomReady.ready(function() {
     });
     let damageList = [];
     document.querySelectorAll('.data-row').forEach( row => {
-      damageList.push( row.querySelector('td.damage').innerText );
+      damageList.push( row.querySelector('td.damage').innerText.replace(/\s/g,'') );
     });
     ipcRenderer.send('generate_results', gdf, damageList);
   });
