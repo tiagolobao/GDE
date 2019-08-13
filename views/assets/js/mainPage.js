@@ -78,7 +78,7 @@ DomReady.ready(function() {
     buffer.forEach( tab => {
       document.querySelectorAll('div.tabcontent#' + tab.id + ' table.element').forEach( element => {
         let photos = [];
-        document.querySelectorAll('td.element-img img').forEach((img) => {
+        document.querySelectorAll('td.element-img img.not-shown').forEach((img) => {
           const src = img.getAttribute('src');
           if(src != 'assets/imagens/sem_imagem.png') photos.push(src);
         });
