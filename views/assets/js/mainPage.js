@@ -208,6 +208,31 @@ DomReady.ready(function() {
     }
   }
 
+  window.skipImg = function(event,elem) {
+    event.stopPropagation();
+    let photosDiv = elem.closest('.element-img');
+    let shownImg = photosDiv.querySelector('img.shown');
+    let notShownImg = photosDiv.querySelectorAll('img.not-shown');
+    for (var i = 0; i < notShownImg.length; i++) {
+      if( notShownImg[i].src == shownImg.src && (i+1) < notShownImg.length ){
+        shownImg.src = notShownImg[i+1].src;
+        break;
+      }
+    }
+  }
+
+  window.prevImg = function(event,elem) {
+    event.stopPropagation();
+    let photosDiv = elem.closest('.element-img');
+    let shownImg = photosDiv.querySelector('img.shown');
+    let notShownImg = photosDiv.querySelectorAll('img.not-shown');
+    notShownImg.forEach((img,i) => {
+      if( img.src == shownImg.src && i>0 ){
+        shownImg.src = notShownImg[i-1].src;
+      }
+    });
+  }
+
   //onChange event
   window.inputNumber = function(input,type) {
 
