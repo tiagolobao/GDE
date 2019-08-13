@@ -249,8 +249,14 @@ module.exports = (ipcRenderer,other) => {
         <tr>
           <td class="name-element element-id" colspan="4"><div contentEditable=true data-text="Nome do elemento"></div></td>
           <td rowspan="9000" class="element-img" onclick="sendImg(this)">
-            <img class="center" src="assets/imagens/sem_imagem.png" width="300">
-            <span class="add-img-btn" > <i class="fas fa-file-upload"></i> </span>
+            <img class="center shown" src="assets/imagens/sem_imagem.png" width="300">
+            <div class="image-list" style="display: none;">
+              <!-- image list -->
+            </div>
+            <span class="add-img-btn cursor-pointer" > <i class="fas fa-file-upload"></i> </span>
+            <span class="del-img-btn cursor-pointer" onclick="delImg(event,this)"> <i class="fas fa-trash-alt"></i> </span>
+            <span class="skip-img-btn cursor-pointer" onclick="skipImg(event,this)"> <i class="fas fa-arrow-right"></i> </span>
+            <span class="prev-img-btn cursor-pointer" onclick="prevImg(event,this)"> <i class="fas fa-arrow-left"></i> </span>
           </td>
           <td rowspan="9000" class="actions-btns">
             <span class="delete-btn element-action-btn" onclick="deleteElement(this)"> <i class="fas fa-trash-alt"></i> </span>

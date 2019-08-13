@@ -56,21 +56,72 @@ span.add-img-btn i{
   border-radius: 15px;
 }
 
+span.del-img-btn i{
+  color: red;
+  background-color: white;
+  border: solid 12px white;
+  border-radius: 15px;
+}
+
+span.skip-img-btn i, span.prev-img-btn i{
+  color: gray;
+  background-color: white;
+  border: solid 12px white;
+  border-radius: 15px;
+}
+
 td.element-img:hover span.add-img-btn{
   opacity: 1;
 }
 
-span.add-img-btn{
+td.element-img:hover span.del-img-btn{
+  opacity: 1;
+}
+
+td.element-img:hover span.skip-img-btn{
+  opacity: 1;
+}
+
+td.element-img:hover span.prev-img-btn{
+  opacity: 1;
+}
+
+span.cursor-pointer i{
+  cursor: pointer;
+}
+
+span.add-img-btn,
+span.del-img-btn,
+span.skip-img-btn,
+span.prev-img-btn{
   display: block;
   position: relative;
   height: 0px;
   width: 0px;
   left: calc(50% - 31px);
-  bottom: 110px;
-  font-size: 50px;
   text-shadow: #47474787 3px 3px 4px;
   transition: 0.5s;
   opacity: 0;
+}
+
+span.add-img-btn{
+  bottom: 110px;
+  font-size: 50px;
+}
+
+span.del-img-btn{
+  bottom: 41px;
+  left: 88%;
+}
+
+span.skip-img-btn{
+  left: 88%;
+  bottom: 93px;
+}
+
+span.prev-img-btn{
+  left: 0px;
+  bottom: 93px;
 }
 
 td.gde, td.ndp{

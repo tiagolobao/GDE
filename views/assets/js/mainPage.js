@@ -176,9 +176,36 @@ DomReady.ready(function() {
     window.changesHistory.push(document.querySelector('body').innerHTML);
     dialog.showOpenDialog( filePaths => {
       if (filePaths === undefined) return;
-      let response = ipcRenderer.sendSync('save_img',filePaths[0]);
-      elem.querySelector('img').src = '../images/temp/' + response;
+      let response = '../images/temp/' + ipcRenderer.sendSync('save_img',filePaths[0]);
+      elem.querySelector('img.shown').src = response;
+      elem.querySelector('div.image-list').insertAdjacentHTML('beforeend',
+        '<img class="not-shown" src="' + response + '">'
+      );
     });
+  }
+
+  window.delImg = function(event,elem) {
+    event.stopPropagation();
+    let photosDiv = elem.closest('.element-img');
+    let shownImg = photosDiv.querySelector('img.shown');
+    let notShownImg = photosDiv.querySelectorAll('img.not-shown');
+    let prevImg = 0;
+    //remove from img list
+    notShownImg.forEach((img,i)=>{
+      if( img.src == shownImg.src ){
+        img.parentNode.removeChild(img);
+        prevImg = i-1;
+      }
+    });
+    //go to next img
+    notShownImg = photosDiv.querySelectorAll('img.not-shown');
+    if( notShownImg.length == 0 ){
+      shownImg.src = 'assets/imagens/sem_imagem.png';
+    }
+    else{
+      if(prevImg < 0) prevImg == 0;
+      shownImg.src = notShownImg[prevImg].src;
+    }
   }
 
   //onChange event
