@@ -254,9 +254,9 @@ module.exports = (ipcRenderer,other) => {
               <!-- image list -->
             </div>
             <span class="add-img-btn cursor-pointer" > <i class="fas fa-file-upload"></i> </span>
-            <span class="del-img-btn cursor-pointer" onclick="delImg(event,this)"> <i class="fas fa-trash-alt"></i> </span>
-            <span class="skip-img-btn cursor-pointer" onclick="skipImg(event,this)"> <i class="fas fa-arrow-right"></i> </span>
-            <span class="prev-img-btn cursor-pointer" onclick="prevImg(event,this)"> <i class="fas fa-arrow-left"></i> </span>
+            <span style="display:none;" class="del-img-btn cursor-pointer" onclick="delImg(event,this)"> <i class="fas fa-trash-alt"></i> </span>
+            <span style="display:none;" class="skip-img-btn cursor-pointer" onclick="skipImg(event,this)"> <i class="fas fa-arrow-right"></i> </span>
+            <span style="display:none;" class="prev-img-btn cursor-pointer" onclick="prevImg(event,this)"> <i class="fas fa-arrow-left"></i> </span>
           </td>
           <td rowspan="9000" class="actions-btns">
             <span class="delete-btn element-action-btn" onclick="deleteElement(this)"> <i class="fas fa-trash-alt"></i> </span>

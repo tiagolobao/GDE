@@ -181,6 +181,9 @@ DomReady.ready(function() {
       elem.querySelector('div.image-list').insertAdjacentHTML('beforeend',
         '<img class="not-shown" src="' + response + '">'
       );
+      elem
+        .querySelectorAll('span.cursor-pointer')
+        .forEach( span => span.style.display = 'block' );
     });
   }
 
@@ -201,6 +204,15 @@ DomReady.ready(function() {
     notShownImg = photosDiv.querySelectorAll('img.not-shown');
     if( notShownImg.length == 0 ){
       shownImg.src = 'assets/imagens/sem_imagem.png';
+      shownImg
+        .closest('td.element-img')
+        .querySelectorAll('span.cursor-pointer')
+        .forEach( span => span.style.display = 'none' );
+      shownImg
+        .closest('td.element-img')
+        .querySelector('span.add-img-btn')
+        .style
+        .display = 'block';
     }
     else{
       if(prevImg < 0) prevImg == 0;
