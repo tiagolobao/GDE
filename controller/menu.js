@@ -9,17 +9,17 @@ const fs = require('fs');
     menuTemplate =  [
       // Each object is a dropdown
       {
-        label: 'Opções',
+        label: 'Arquivo',
         submenu:[
           {
-            label: 'Salvar Alterações',
+            label: 'Salvar',
             accelerator:process.platform == 'darwin' ? 'Command+S' : 'Ctrl+S',
             click(){
               targetWindow.webContents.send('save_changes');
             }
           },
           {
-            label: 'Carregar Alterações',
+            label: 'Abrir',
             accelerator:process.platform == 'darwin' ? 'Command+L' : 'Ctrl+L',
             click(){
               const path = dialog.showOpenDialog(targetWindow, {
@@ -36,6 +36,18 @@ const fs = require('fs');
               }
             }
           },
+          {
+            label: 'Sair',
+            accelerator:process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+            click(){
+              app.quit();
+            }
+          },
+        ]
+      },
+      {
+        label: 'Opções',
+        submenu:[
           {
             label: 'Exportar .xlsx',
             accelerator:process.platform == 'darwin' ? 'Command+E' : 'Ctrl+E',
@@ -62,13 +74,6 @@ const fs = require('fs');
             accelerator:process.platform == 'darwin' ? 'Command+Z' : 'Ctrl+Z',
             click(){
               targetWindow.webContents.send('undo');;
-            }
-          },
-          {
-            label: 'Sair',
-            accelerator:process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-            click(){
-              app.quit();
             }
           },
         ]

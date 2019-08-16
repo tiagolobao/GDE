@@ -46,6 +46,12 @@ DomReady.ready(function() {
             GDE
             NDP
             photos
+              [
+                {
+                  file
+                  base64
+                }
+              ]
             damages
               [
                 {
@@ -79,9 +85,9 @@ DomReady.ready(function() {
     buffer.forEach( tab => {
       document.querySelectorAll('div.tabcontent#' + tab.id + ' table.element').forEach( element => {
         let photos = [];
-        document.querySelectorAll('td.element-img img.not-shown').forEach((img) => {
+        element.querySelectorAll('td.element-img img.not-shown').forEach((img) => {
           const src = img.getAttribute('src');
-          if(src != 'assets/imagens/sem_imagem.png') photos.push(src);
+          if(src != 'assets/imagens/sem_imagem.png') photos.push({ file: src });
         });
         console.log(photos);
         tab.elementList.push({
