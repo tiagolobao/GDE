@@ -1,4 +1,6 @@
 module.exports = (app, Menu, targetWindow, type) => {
+const { dialog } = require('electron');
+const fs = require('fs');
 
   let menuTemplate = [];
 
@@ -14,6 +16,24 @@ module.exports = (app, Menu, targetWindow, type) => {
             accelerator:process.platform == 'darwin' ? 'Command+S' : 'Ctrl+S',
             click(){
               targetWindow.webContents.send('save_changes');
+            }
+          },
+          {
+            label: 'Carregar Alterações',
+            accelerator:process.platform == 'darwin' ? 'Command+L' : 'Ctrl+L',
+            click(){
+              const path = dialog.showOpenDialog(targetWindow, {
+                properties: ['openFile'],
+                filters: [
+                  { name: 'Arquivos gde', extensions: ['gde'] },
+                  { name: 'Arquivos de texto', extensions: ['txt','json'] },
+                  { name: 'Todos os arquivos', extensions: ['*'] }
+                ],
+              });
+              if( path.length > 0 ){
+                const rawdata = fs.readFileSync(path[0]);
+                targetWindow.webContents.send('load_changes', JSON.parse(rawdata));
+              }
             }
           },
           {

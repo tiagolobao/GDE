@@ -4,14 +4,15 @@ const {ipcRenderer} = electron;
 const { dialog } = electron.remote;
 
 window.ipcVar = ipcRenderer.sendSync('get_global');
-window.ipcLastChanges = ipcRenderer.sendSync('get_lastChanges');
 window.changesHistory = [];
 
 DomReady.ready(function() {
 
-  //Reput last changes
-  if( ipcLastChanges != null ){
-    ipcLastChanges.forEach( tab => {
+  //Load Changes
+  ipcRenderer.on('load_changes', function(e, data){
+    console.log(e);
+    console.log(data);
+    data.forEach( tab => {
       tab.elementList.forEach( element => {
         document.querySelector('#' + tab.id +  ' hr.endtabcontent').insertAdjacentHTML('beforebegin', element.htmlNode);
       });
@@ -20,7 +21,7 @@ DomReady.ready(function() {
       tabNode.querySelector('td.gdeSum-value').innerText = tab.gdeSum;
       tabNode.querySelector('td.gdeMax-value').innerText = tab.gdeMax;
     });
-  }
+  });
 
   window.getAllData = function(){
 
@@ -417,12 +418,26 @@ DomReady.ready(function() {
   //Save changes
   ipcRenderer.on('save_changes',()=>{
     let data = JSON.stringify(window.getAllData());
-    ipcRenderer.send('save_changes',data);
-    let box = document.querySelector('div.floatBox.savedChanges');
-    box.classList.add('show');
-    setTimeout(
-      () => box.classList.remove('show')
-      ,3000
+    dialog.showSaveDialog(
+      {
+        title: 'Salvar as alterações',
+        properties: ['saveFile'],
+        filters: [
+          { name: 'Arquivos gde', extensions: ['gde'] },
+          { name: 'Arquivos de texto', extensions: ['txt','json'] },
+          { name: 'Todos os arquivos', extensions: ['*'] }
+        ],
+      },
+      path => {
+        if (path === undefined) return;
+        ipcRenderer.send('save_changes',data,path);
+        let box = document.querySelector('div.floatBox.savedChanges');
+        box.classList.add('show');
+        setTimeout(
+          () => box.classList.remove('show')
+          ,3000
+        );
+      }
     );
   });
 
