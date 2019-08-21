@@ -258,7 +258,7 @@ DomReady.ready(function() {
     */
     window.changesHistory.push(document.querySelector('body').innerHTML);
     (function(){
-      let damage = input.closest('.data-row').querySelector('.damage').textContent;
+      let damage = input.closest('.data-row').querySelector('.damage').textContent.replace(/\s/g,'');
       let val = parseInt(input.value);
       let min, max;
       if( type == 'fp' && damage == 'fissuras'){
