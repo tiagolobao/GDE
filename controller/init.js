@@ -45,32 +45,12 @@ module.exports = (appDir) => {
   });
 
   app.on('will-quit', function () {
-    /* Delete temp files */
     let tempDirectory = '/images/temp/';
     let fileList = fs.readdirSync(appDir + tempDirectory);
     if( fileList ){
-      if( fs.existsSync('tempDB.json') ){  //Delete unlinked files
-        const rawdata = JSON.parse( fs.readFileSync('tempDB.json') );
-
-        fileList.forEach( file =>{
-          let isLinked = false;
-          rawdata.forEach( tab => {
-            tab.elementList.forEach( element => {
-              element.photos.forEach( img => {
-                const linkToFile = img.replace('../images/temp/','');
-                if( file == linkToFile ) isLinked = true;
-              });
-            });
-          });
-          if( !isLinked ) fs.unlinkSync( appDir + tempDirectory + file );
-        });
-
-      }
-      else{ // Delete all files
-        fileList.forEach( file =>{
-          fs.unlinkSync( appDir + tempDirectory + file );
-        });
-      }
+      fileList.forEach( file =>{
+        fs.unlinkSync( appDir + tempDirectory + file );
+      });
     }
   });
 

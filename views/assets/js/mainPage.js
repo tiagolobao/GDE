@@ -10,8 +10,6 @@ DomReady.ready(function() {
 
   //Load Changes
   ipcRenderer.on('load_changes', function(e, data){
-    console.log(e);
-    console.log(data);
     data.forEach( tab => {
       tab.elementList.forEach( element => {
         document.querySelector('#' + tab.id +  ' hr.endtabcontent').insertAdjacentHTML('beforebegin', element.htmlNode);
@@ -423,7 +421,7 @@ DomReady.ready(function() {
 
   //Save changes
   ipcRenderer.on('save_changes',()=>{
-    let data = JSON.stringify(window.getAllData());
+    let data = window.getAllData()
     dialog.showSaveDialog(
       {
         title: 'Salvar as alterações',
@@ -437,13 +435,15 @@ DomReady.ready(function() {
       path => {
         if (path === undefined) return;
         ipcRenderer.send('save_changes',data,path);
-        let box = document.querySelector('div.floatBox.savedChanges');
-        box.classList.add('show');
-        setTimeout(
-          () => box.classList.remove('show')
-          ,3000
-        );
       }
+    );
+  });
+  ipcRenderer.on('save_done',()=>{
+    let box = document.querySelector('div.floatBox.savedChanges');
+    box.classList.add('show');
+    setTimeout(
+      () => box.classList.remove('show')
+      ,3000
     );
   });
 

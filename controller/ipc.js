@@ -16,7 +16,20 @@ module.exports = (ipcRenderer,other) => {
   });
 
   ipcRenderer.on('save_changes', function(e,data,file){
-    fs.writeFileSync(file, data);
+    //Add base64
+    const tempDirectory = '/images/temp/';
+    data.forEach( tab => {
+      tab.elementList.forEach( element => {
+        element.photos.forEach( img => {
+          const linkToFile = img.file.replace('../images/temp/','');
+          let buff = fs.readFileSync(other.dir + tempDirectory + linkToFile);
+          img.base64 = buff.toString('base64');
+        });
+      });
+    });
+
+    fs.writeFileSync( file, JSON.stringify(data) );
+    other.mainWindow.webContents.send('save_done');
   });
 
   ipcRenderer.on('export_excel', function(e,path,datas){

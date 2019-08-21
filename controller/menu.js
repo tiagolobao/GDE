@@ -31,8 +31,17 @@ const fs = require('fs');
                 ],
               });
               if( path.length > 0 ){
-                const rawdata = fs.readFileSync(path[0]);
-                targetWindow.webContents.send('load_changes', JSON.parse(rawdata));
+                const data = JSON.parse( fs.readFileSync(path[0]) );
+                data.forEach( tab => {
+                  tab.elementList.forEach( element => {
+                    element.photos.forEach( img => {
+                      let thisFilePath = img.file.replace('.','');
+                      let buff = Buffer.from(img.base64,'base64');
+                      fs.writeFileSync(thisFilePath, buff);
+                    });
+                  });
+                });
+                targetWindow.webContents.send('load_changes',data);
               }
             }
           },
