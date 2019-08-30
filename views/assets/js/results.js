@@ -9,17 +9,17 @@ const { dialog } = electron.remote;
     window.print();
   });
 
-  document.querySelector('div#excel-btn').addEventListener('click',()=>{
-    dialog.showOpenDialog({
-      title: 'Salvar os resultados em planilha',
-      properties: [
-        'openDirectory',
-      ],
-    }, path => {
-      if (path === undefined) return;
-      ipcRenderer.send('export_excel',path[0]);
-    });
-  });
+  // document.querySelector('div#excel-btn').addEventListener('click',()=>{
+  //   dialog.showOpenDialog({
+  //     title: 'Salvar os resultados em planilha',
+  //     properties: [
+  //       'openDirectory',
+  //     ],
+  //   }, path => {
+  //     if (path === undefined) return;
+  //     ipcRenderer.send('export_excel',path[0]);
+  //   });
+  // });
 
   let gdf = {
     name: [],

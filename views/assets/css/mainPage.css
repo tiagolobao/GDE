@@ -349,3 +349,78 @@ td.actions-btns{
 td.element-img{
   width: 1px;
 }
+
+div.tabcontent-title{
+  display: none;
+  margin: 15px;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+@media print {
+
+  div.tab{
+    display: none;
+  }
+
+  table.element{
+    display: table !important;
+    page-break-inside: avoid;
+  }
+
+  div#width-selector{
+    display: none;
+  }
+
+  div.tabcontent{
+    margin-left: 0px !important;
+    display: table !important;
+    width: 100%;
+  }
+
+  div#none{
+    display: none !important;
+  }
+
+  button.add-element{
+    display: none !important;
+  }
+
+  div.gdf{
+    position: unset !important;
+    page-break-inside: avoid !important;
+  }
+
+  hr.endtabcontent {
+    margin: 10px 0px 10px 0px !important;
+  }
+
+  div.tabcontent-title{
+    display: table !important;
+  }
+
+  tr.data-row td.damage:hover span.delete-row-btn{
+    opacity: 0 !important;
+  }
+
+  span.element-action-btn:hover{
+    color: black !important;
+  }
+
+  td.element-img:hover span.add-img-btn{
+    opacity: 0 !important;
+  }
+
+  td.element-img:hover span.del-img-btn{
+    opacity: 0 !important;
+  }
+
+  td.element-img:hover span.skip-img-btn{
+    opacity: 0 !important;
+  }
+
+  td.element-img:hover span.prev-img-btn{
+    opacity: 0 !important;
+  }
+
+}

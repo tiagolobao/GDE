@@ -58,6 +58,13 @@ const fs = require('fs');
         label: 'Opções',
         submenu:[
           {
+            label: 'Imprimir',
+            accelerator:process.platform == 'darwin' ? 'Command+P' : 'Ctrl+P',
+            click(){
+              targetWindow.webContents.send('print_mainPage');
+            }
+          },
+          {
             label: 'Exportar .xlsx',
             accelerator:process.platform == 'darwin' ? 'Command+E' : 'Ctrl+E',
             click(){

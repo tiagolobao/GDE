@@ -464,6 +464,11 @@ DomReady.ready(function() {
     }
   });
 
+  //Print
+  ipcRenderer.on('print_mainPage',()=>{
+    window.print();
+  });
+
   //Export to excel
   ipcRenderer.on('export_excel',()=>{
     const data = window.getAllData();

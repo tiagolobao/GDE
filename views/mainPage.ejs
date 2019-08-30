@@ -7,6 +7,7 @@ config.elementos.forEach( e => {
   menuButtons.push(`<button class="tablinks" onclick="openTab(event, '${e.id}')">${e.nome}</button>`);
   tabsContent.push(`
     <div id="${e.id}" class="tabcontent">
+      <div class="tabcontent-title"> ${e.nome} </div>
       <hr class="endtabcontent">
       <div class="gdf">
           <table>
