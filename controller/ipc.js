@@ -32,16 +32,12 @@ module.exports = (ipcRenderer,other) => {
     other.mainWindow.webContents.send('save_done');
   });
 
-  ipcRenderer.on('export_excel', function(e,path,datas){
-    const xlsxfy = [
-      [1, 2, 3],
-      [true, false, null, 'sheetjs'],
-      ['foo', 'bar', new Date('2014-02-19T14:30Z'), '0.3'],
-      ['baz', null, 'qux']
-    ];
-    const options = {};
+  ipcRenderer.on('export_excel', function(e,data,path){
+
+    let options = {};
+    const xlsxfy = require('./xlsxfy.js')(data,variables,options);
     let buffer = xlsx.build([{name: "GDE", data: xlsxfy}], options);
-    fs.writeFile(path + '/Relatório GDE.xlsx', buffer, function(err) {
+    fs.writeFile(path, buffer, function(err) {
       if(err) {
           return console.log(err);
       }

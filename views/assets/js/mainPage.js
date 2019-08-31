@@ -258,7 +258,8 @@ DomReady.ready(function() {
     */
     window.changesHistory.push(document.querySelector('body').innerHTML);
     (function(){
-      let damage = input.closest('.data-row').querySelector('.damage').textContent.replace(/\s/g,'');
+
+      let damage = input.closest('.data-row').querySelector('.damage').textContent.replace(/\s{2,}$/g,'');
       let val = parseInt(input.value);
       let min, max;
       if( type == 'fp' && damage == 'fissuras'){
@@ -378,7 +379,7 @@ DomReady.ready(function() {
     });
     let damageList = [];
     document.querySelectorAll('.data-row').forEach( row => {
-      damageList.push( row.querySelector('td.damage').innerText.replace(/\s/g,'') );
+      damageList.push( row.querySelector('td.damage').innerText.replace(/\s{2,}$/g,'') );
     });
     ipcRenderer.send('generate_results', gdf, damageList);
   });
@@ -472,15 +473,20 @@ DomReady.ready(function() {
   //Export to excel
   ipcRenderer.on('export_excel',()=>{
     const data = window.getAllData();
-    dialog.showOpenDialog({
-      title: 'Salvar os resultados em planilha',
-      properties: [
-        'openDirectory',
-      ],
-    }, path => {
-      if (path === undefined) return;
-      ipcRenderer.send('export_excel', path[0], data);
-    });
+    dialog.showSaveDialog(
+      {
+        title: 'Salvar os resultados em planilha',
+        properties: ['saveFile'],
+        filters: [
+          { name: 'Planilha Excel', extensions: ['xlsx'] },
+          { name: 'Todos os arquivos', extensions: ['*'] }
+        ],
+      },
+      path => {
+        if (path === undefined) return;
+        ipcRenderer.send('export_excel',data,path);
+      }
+    );
   });
 
 })();
