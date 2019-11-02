@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "ejs-electron": "^2.0.3",
-    "mongoose": "^5.5.9",
+    "mongoose": "^5.7.5",
     "node-xlsx": "^0.15.0"
   }
 }
